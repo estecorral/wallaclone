@@ -4,10 +4,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import { useForm } from 'react-hook-form'
-import './Register.css';
+import {Controller, useForm} from 'react-hook-form'
 import { makeStyles } from '@material-ui/core/styles';
+
+import {setNewUser} from "../../Services/api";
+import './Register.css';
 
 const useStyles = makeStyles({
     root: {
@@ -28,17 +29,15 @@ const useStyles = makeStyles({
 });
 
 export default function Register() {
-    const { register, handleSubmit, watch, errors } = useForm()
-    const onSubmit = data => { console.log(data) }
+    const { handleSubmit, watch, errors, control } = useForm()
+    const onSubmit = data => { setNewUser(data).then(res => console.log(res));
+    }
 
     const classes = useStyles();
-
-    console.log(watch('example'));
 
     return (
         <div className="Register">
             <Card className="card" variant="outlined">
-                <FormControl onSubmit={handleSubmit(onSubmit)}>
                     <CardContent className="card-content">
                         <Typography variant="h5" component="h2">
                             Regístrate en wallaclone
@@ -46,15 +45,33 @@ export default function Register() {
                         <Typography  color="textSecondary">
                             Escribe tus datos
                         </Typography>
-                            <TextField id="username" label="Username" color="primary"
-                                       className={classes.input} ref={register}/>
-                            <TextField id="email" label="email" color="primary" className={classes.input}/>
-                            <TextField id="password" label="Password" color="primary" className={classes.input}/>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <Controller
+                                name="username"
+                                as={<TextField label="Username" className="input"/>}
+                                control={control}
+                                rules={{required: true}}
+                                defaultValue=""
+                            />
+                            <Controller
+                                name="email"
+                                as={<TextField label="email" className="input"/>}
+                                control={control}
+                                rules={{required: true}}
+                                defaultValue=""
+                            />
+                            <Controller
+                                name="password"
+                                as={<TextField label="Password" type="password" className="input"/>}
+                                control={control}
+                                rules={{required: true}}
+                                defaultValue=""
+                            />
                             <Button variant="contained" color="primary" className={classes.root} type="submit">
                                 Registrarse
                             </Button>
+                        </form>
                     </CardContent>
-                </FormControl>
             </Card>
         </div>
     );
