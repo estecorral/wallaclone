@@ -1,12 +1,16 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { ConnectedRouter } from "connected-react-router";
+import { Provider } from 'react-redux';
+import { history } from "../../store";
 
 import App from '../App';
 
-const Root = ({history, ...props}) => (
-    <Router history={history}>
-        <App {...props}/>
-    </Router>
+const Root = ({store, ...props}) => (
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App {...props}/>
+        </ConnectedRouter>
+    </Provider>
 );
 
 export default Root;

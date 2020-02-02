@@ -5,35 +5,54 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Controller, useForm} from 'react-hook-form'
-import { makeStyles } from '@material-ui/core/styles';
-
-import {setNewUser} from "../../Services/api";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from '@material-ui/lab/Alert';
+import { buttonStyles } from "../ComponentStyles/buttonStyles";
 import './Register.css';
 
-const useStyles = makeStyles({
-    root: {
-        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
-        border: 0,
-        borderRadius: 30,
-        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-        color: 'white',
-        height: 48,
-        padding: '0 30px',
-        marginTop: 20,
-        width: '100%',
-    },
-    input: {
-        margin: 3,
-        width: '100%',
-    }
-});
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
-export default function Register() {
-    const { handleSubmit, watch, errors, control } = useForm()
-    const onSubmit = data => { setNewUser(data).then(res => console.log(res));
-    }
+export default function Register(props) {
+    const { handleSubmit, errors, control } = useForm();
+    const onSubmit = (data) => {
+        props.regNewUser(data);
+    };
 
-    const classes = useStyles();
+    const classes = buttonStyles();
+
+    const setAlerts = (err) => {
+        let openError = false;
+        if(err.username){
+            openError = true;
+            return (
+                <Snackbar open={openError} autoHideDuration={6000}>
+                    <Alert severity="error">
+                        Campo username requerido
+                    </Alert>
+                </Snackbar>
+            );
+        } else if (err.password) {
+            openError = true;
+            return (
+                <Snackbar open={openError} autoHideDuration={6000}>
+                    <Alert severity="error">
+                        Campo password requerido
+                    </Alert>
+                </Snackbar>
+            );
+        } else if (err.email) {
+            openError = true;
+            return (
+                <Snackbar open={openError} autoHideDuration={6000}>
+                    <Alert severity="error">
+                        Campo email requerido
+                    </Alert>
+                </Snackbar>
+            );
+        }
+    };
 
     return (
         <div className="Register">
@@ -53,6 +72,8 @@ export default function Register() {
                                 rules={{required: true}}
                                 defaultValue=""
                             />
+                            {errors.username &&
+                            errors.username.type === "required"}
                             <Controller
                                 name="email"
                                 as={<TextField label="email" className="input"/>}
@@ -60,6 +81,8 @@ export default function Register() {
                                 rules={{required: true}}
                                 defaultValue=""
                             />
+                            {errors.email &&
+                            errors.email.type === "required"}
                             <Controller
                                 name="password"
                                 as={<TextField label="Password" type="password" className="input"/>}
@@ -67,12 +90,20 @@ export default function Register() {
                                 rules={{required: true}}
                                 defaultValue=""
                             />
-                            <Button variant="contained" color="primary" className={classes.root} type="submit">
+                            {errors.password &&
+                            errors.password.type === "required"}
+                            <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
                                 Registrarse
                             </Button>
                         </form>
                     </CardContent>
             </Card>
+            {setAlerts(errors)}
+            <Snackbar open={!props.regUser} autoHideDuration={6000}>
+                <Alert severity="error">
+                    Username o email ya están en uso
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

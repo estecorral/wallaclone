@@ -1,10 +1,14 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:3001/apiv1/';
+const API_URL = 'http://localhost:3001/apiv1';
 
 const setNewUser = async (user) => {
     try {
-        return await axios.post(`${API_URL}register`, user).then(() => {
-            return 'Usuario registrado correctamente'
+        return await axios.post(`${API_URL}/register`, user).then((res) => {
+            if (!res.data.success) {
+                return res.data.success;
+            } else if (res.data.success) {
+                return res.data.success;
+            }
         });
     }catch (e) {
         console.log(e.message);

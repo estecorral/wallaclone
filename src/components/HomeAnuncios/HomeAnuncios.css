@@ -1,0 +1,20 @@
+.homeAnuncios {
+    display: flex;
+    flex-direction: column;
+}
+.searcher {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 25vh;
+}
+.selectores {
+    margin-top: 20px;
+}
+.cardList {
+    background-color: #e1f5fe;
+    width: 100vw;
+    height: 75vh;
+}

@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from 'history';
 import Root from "./components/Root";
+import {configureStore} from "./store";
+
+import './index.css';
 
 const history = createBrowserHistory();
 
+const store = configureStore();
+
 const rootProps = {
-    history
+    history,
+    store,
 }
 
 ReactDOM.render(<Root {...rootProps}/>, document.getElementById('root'));
