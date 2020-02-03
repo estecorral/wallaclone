@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { navStyles } from "../ComponentStyles/buttonStyles";
 import {SportsEsports, DriveEtaRounded, PhoneIphoneRounded, ComputerRounded, SportsBasketballRounded,
-    LocalLaundryServiceRounded, RemoveRedEyeRounded, FavoriteOutlined } from "@material-ui/icons";
+    LocalLaundryServiceRounded, RemoveRedEyeRounded, FavoriteOutlined, EuroSymbolRounded } from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -18,6 +18,8 @@ import {Controller, useForm} from "react-hook-form";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
+import Chip from "@material-ui/core/Chip";
+import {lightBlue} from "@material-ui/core/colors";
 
 export default function HomeAnuncios(props) {
     const { handleSubmit, errors, control } = useForm();
@@ -25,11 +27,25 @@ export default function HomeAnuncios(props) {
 
     useEffect(() => {
         props.getAllAds();
-    }, [props.getAllAds]);
+        props.getAllTags();
+    }, [props.getAllAds, props.getAllTags]);
 
     const onSubmit = (data) => {
         console.log(data);
     };
+
+    const searchTag = (categoria) => {
+        switch (categoria) {
+            case 'all':
+                console.log(categoria);
+            case 'game':
+            case 'motor':
+            case 'movil':
+            case 'pc':
+            case 'sport':
+            case 'electro':
+        }
+    }
 
     return(
         <React.Fragment>
@@ -56,13 +72,27 @@ export default function HomeAnuncios(props) {
                         <Typography variant="h6" color="textSecondary">Selecciona una categoria</Typography>
                     </div>
                     <div className="iconsearch">
-                        <RemoveRedEyeRounded className={classes.iconButton} />
-                        <SportsEsports className={classes.iconButton}/>
-                        <DriveEtaRounded className={classes.iconButton}/>
-                        <PhoneIphoneRounded className={classes.iconButton}/>
-                        <ComputerRounded className={classes.iconButton}/>
-                        <SportsBasketballRounded className={classes.iconButton}/>
-                        <LocalLaundryServiceRounded className={classes.iconButton}/>
+                        <IconButton aria-label="todos los anuncios" onClickCapture={searchTag('all')}>
+                            <RemoveRedEyeRounded fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <SportsEsports fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <DriveEtaRounded fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <PhoneIphoneRounded fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <ComputerRounded fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <SportsBasketballRounded fontSize="large"/>
+                        </IconButton>
+                        <IconButton aria-label="todos los anuncios" >
+                            <LocalLaundryServiceRounded fontSize="large"/>
+                        </IconButton>
                     </div>
                     <div className="selectores">
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -101,7 +131,7 @@ export default function HomeAnuncios(props) {
                         props.ads.length === 0 ? <div>Cargando</div> : props.ads.map(ad => (
                             <Card className={classes.card} key={ad._id}>
                                 <CardHeader
-                                    title={ad.nombre}
+                                    title={ad.nombre.slice(0,20)}
                                 />
                                 <CardMedia
                                     className={classes.cardmedia}
@@ -116,6 +146,21 @@ export default function HomeAnuncios(props) {
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteOutlined />
                                     </IconButton>
+                                    <Chip
+                                        icon={<EuroSymbolRounded />}
+                                        label={ad.precio}
+                                        style={{backgroundColor:'#b3e5fc'}}
+                                    />
+                                    {ad.venta ?
+                                    <Chip className={classes.chipventa}
+                                          label="venta"
+                                          style={{backgroundColor:'#0288d1', color: 'white'}}
+                                    /> :
+                                    <Chip className={classes.chipcompra}
+                                          label="compra"
+                                          color="primary"
+                                          variant="outlined"
+                                    />}
                                 </CardActions>
                             </Card>
                         ))

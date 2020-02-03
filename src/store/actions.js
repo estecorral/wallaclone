@@ -1,5 +1,5 @@
 import * as types from './types';
-import {setNewUser, getAds} from "../Services/api";
+import {setNewUser, getAds, getTags} from "../Services/api";
 import { push } from 'connected-react-router';
 
 /**
@@ -61,5 +61,35 @@ export const getAdsSuccesfull = ads => ({
 
 export const getAdsFailure = error => ({
     type: types.GET_ADS_FAILURE,
+    error,
+});
+
+/**
+ *  Recoge los tags disponibles
+ **/
+
+export const fetchTags = () => {
+    return async function (dispatch, getState) {
+        dispatch(getTagsRequest());
+        try {
+            const tags = await getTags();
+            dispatch(getTagsSuccesfull(tags));
+        }catch (e) {
+            dispatch(getTagsFailure(e));
+        }
+    }
+};
+
+export const getTagsRequest = () => ({
+    type: types.GET_TAGS_REQUEST,
+});
+
+export const getTagsSuccesfull = tags => ({
+    type: types.GET_TAGS_SUCCESFULL,
+    tags,
+});
+
+export const getTagsFailure = error => ({
+    type: types.GET_TAGS_FAILURE,
     error,
 });

@@ -21,7 +21,6 @@ const setNewUser = async (user) => {
 const getAds = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios`).then(res => {
-            console.log(res.data.result);
             return res.data.result;
         });
     }catch (e) {
@@ -31,7 +30,19 @@ const getAds = async () => {
 
 };
 
+const getTags = async () => {
+    try {
+        return await axios.get(`${API_URL}/anuncios/tags`).then(res => {
+           return res.data.result;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+}
+
 export {
     setNewUser,
     getAds,
+    getTags,
 }

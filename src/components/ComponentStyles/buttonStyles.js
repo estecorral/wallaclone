@@ -25,6 +25,17 @@ const navStyles = makeStyles((theme: Theme) =>
         root: {
             flexGrow: 1,
         },
+        buttonBlue: {
+            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+            border: 0,
+            borderRadius: 30,
+            boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+            color: 'white',
+            height: 48,
+            padding: '0 30px',
+            marginTop: 20,
+            width: '60%',
+        },
         nav: {
           background: '#4fc3f7',
         },
@@ -47,6 +58,9 @@ const navStyles = makeStyles((theme: Theme) =>
             marginRight: '25px',
             marginTop: '20px',
         },
+        buttontags: {
+          fontSize: '50px'
+        },
         card: {
             width: '24vw',
             height: '32vh',
@@ -62,7 +76,7 @@ const navStyles = makeStyles((theme: Theme) =>
         cardactions: {
             margin: '0',
             padding: '0px',
-        }
+        },
     }),
 );
 
