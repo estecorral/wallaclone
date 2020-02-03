@@ -18,6 +18,7 @@ export default function Register(props) {
     const { handleSubmit, errors, control } = useForm();
     const onSubmit = (data) => {
         props.regNewUser(data);
+        console.log(props);
     };
 
     const classes = buttonStyles();

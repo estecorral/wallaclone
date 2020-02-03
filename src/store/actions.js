@@ -10,6 +10,7 @@ export const fetchNewUser = (user) => {
         dispatch(registerUserRequest());
         try {
             const newUser = await setNewUser(user);
+            console.log(newUser);
             dispatch(registerUserSuccesfull(newUser));
             if(newUser) {
                 dispatch(push('/login'));
@@ -24,9 +25,9 @@ export const registerUserRequest = () => ({
     type: types.REGISTER_USER_REQUEST,
 });
 
-export const registerUserSuccesfull = user => ({
+export const registerUserSuccesfull = regUser => ({
     type: types.REGISTER_USER_SUCCESFULL,
-    user,
+    regUser,
 });
 
 export const registerUserFailure = error => ({
@@ -37,11 +38,11 @@ export const registerUserFailure = error => ({
 /**
  Gestión recuperar los anuncios
  **/
-export const fetchAds = (tag, price, name, type) => {
+export const fetchAds = () => {
     return async function (dispatch, getState) {
         dispatch(getAdsRequest());
         try {
-            const ads = await getAds(tag, price, name, type);
+            const ads = await getAds();
             dispatch(getAdsSuccesfull(ads));
         } catch (e) {
             dispatch(getAdsFailure(e));

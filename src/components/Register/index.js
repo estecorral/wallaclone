@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { registUser } from '../../store/selectors';
+import { getRegistUser } from '../../store/selectors';
 
 import Register from './Register';
 import { fetchNewUser } from "../../store/actions";
 
 function mapStateToProps(state) {
     return {
-        regUser: registUser(state),
+        regUser: getRegistUser(state),
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {

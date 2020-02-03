@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import AppBar from '@material-ui/core/AppBar';
@@ -9,25 +9,26 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { navStyles } from "../ComponentStyles/buttonStyles";
 import {SportsEsports, DriveEtaRounded, PhoneIphoneRounded, ComputerRounded, SportsBasketballRounded,
-    LocalLaundryServiceRounded, RemoveRedEyeRounded } from "@material-ui/icons";
+    LocalLaundryServiceRounded, RemoveRedEyeRounded, FavoriteOutlined } from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import './HomeAnuncios.css'
 import {Controller, useForm} from "react-hook-form";
-
-import {getAds} from "../../Services/api";
+import CardActions from "@material-ui/core/CardActions";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardHeader from "@material-ui/core/CardHeader";
 
 export default function HomeAnuncios(props) {
     const { handleSubmit, errors, control } = useForm();
     const classes = navStyles();
 
+    useEffect(() => {
+        props.getAllAds();
+    }, [props.getAllAds]);
+
     const onSubmit = (data) => {
         console.log(data);
-    };
-
-    const getListAnunces = (tag, price, name, type) => {
-        console.log(getAds(tag, price, name, type));
     };
 
     return(
@@ -90,13 +91,35 @@ export default function HomeAnuncios(props) {
                                 defaultValue=""
                             />
                             <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
-                                Registrarse
+                                Buscar
                             </Button>
                         </form>
                     </div>
                 </div>
                 <div className="cardList">
-                    { getListAnunces('all', '', '', '') }
+                    {
+                        props.ads.length === 0 ? <div>Cargando</div> : props.ads.map(ad => (
+                            <Card className={classes.card} key={ad._id}>
+                                <CardHeader
+                                    title={ad.nombre}
+                                />
+                                <CardMedia
+                                    className={classes.cardmedia}
+                                    image={`http://localhost:3001/images/anuncios/${ad.foto}`}
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {ad.descripcion.slice(0,50)}...
+                                    </Typography>
+                                </CardContent>
+                                <CardActions className={classes.cardactions}>
+                                    <IconButton aria-label="add to favorites">
+                                        <FavoriteOutlined />
+                                    </IconButton>
+                                </CardActions>
+                            </Card>
+                        ))
+                    }
                 </div>
             </div>
         </React.Fragment>

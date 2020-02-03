@@ -46,6 +46,22 @@ const navStyles = makeStyles((theme: Theme) =>
             fontSize: 50,
             marginRight: '25px',
             marginTop: '20px',
+        },
+        card: {
+            width: '24vw',
+            height: '32vh',
+            marginLeft: '0.4vw',
+            marginRight:'0.4vw',
+            marginTop: '20px',
+        },
+        cardmedia: {
+            width: '100%',
+            height: '50%',
+            background: 'cover',
+        },
+        cardactions: {
+            margin: '0',
+            padding: '0px',
         }
     }),
 );
