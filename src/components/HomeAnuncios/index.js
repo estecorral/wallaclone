@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import HomeAnuncios from './HomeAnuncios';
 import {getAllAds, getAllTags} from "../../store/selectors";
-import {fetchAds, fetchTags} from "../../store/actions";
+import {fetchAds, fetchTags, fetchFilterAds} from "../../store/actions";
 
 function mapStateToProps(state) {
     return {
@@ -14,6 +14,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         getAllAds: () => dispatch (fetchAds(), ownProps.push),
         getAllTags: () => dispatch (fetchTags(), ownProps.push),
+        getFilterAds: (filters) => dispatch(fetchFilterAds(filters), ownProps.push),
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeAnuncios);

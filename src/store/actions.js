@@ -1,5 +1,5 @@
 import * as types from './types';
-import {setNewUser, getAds, getTags} from "../Services/api";
+import {setNewUser, getAds, getTags, filterAds} from "../Services/api";
 import { push } from 'connected-react-router';
 
 /**
@@ -93,3 +93,20 @@ export const getTagsFailure = error => ({
     type: types.GET_TAGS_FAILURE,
     error,
 });
+
+/**
+ *  Devuelve los anuncios filtrados
+ **/
+
+export const fetchFilterAds = (filters) => {
+    return async function (dispatch, getState) {
+        dispatch(getAdsRequest());
+        try {
+            const ads = await filterAds(filters);
+            console.log(ads, filters);
+            dispatch(getAdsSuccesfull(ads));
+        }catch (e) {
+            dispatch(getAdsFailure(e));
+        }
+    }
+};

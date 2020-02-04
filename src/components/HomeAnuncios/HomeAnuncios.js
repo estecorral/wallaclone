@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import AppBar from '@material-ui/core/AppBar';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { navStyles } from "../ComponentStyles/buttonStyles";
+import {navStyles} from "../ComponentStyles/buttonStyles";
 import {SportsEsports, DriveEtaRounded, PhoneIphoneRounded, ComputerRounded, SportsBasketballRounded,
     LocalLaundryServiceRounded, RemoveRedEyeRounded, FavoriteOutlined, EuroSymbolRounded } from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
@@ -19,33 +19,56 @@ import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import Chip from "@material-ui/core/Chip";
-import {lightBlue} from "@material-ui/core/colors";
+import ReactSelect from 'react-select';
+
+const optionsType = [
+    { value: false, label: "Compra" },
+    { value: true, label: "Venta" }
+];
+
+const optionsPrice = [
+    { value: "1-100", label: "1-100" },
+    { value: "101-500", label: "101-500" },
+    { value: "501-2000", label: "501-2000" },
+    { value: "2001-5000", label: "2001-5000" },
+    { value: "5001-10000", label: "5001-10000" }
+];
+
 
 export default function HomeAnuncios(props) {
     const { handleSubmit, errors, control } = useForm();
+    const [state, setState] = useState( {
+        filters: {
+            tag: '',
+            price: '',
+            name: '',
+            type: '',
+        }
+    });
+
     const classes = navStyles();
 
+    const getAds = useCallback(
+        filters => {
+            filters ? props.getFilterAds(filters) : props.getAllAds();
+        }, [props.getFilterAds, props.getAllAds]
+    );
+
     useEffect(() => {
-        props.getAllAds();
-        props.getAllTags();
-    }, [props.getAllAds, props.getAllTags]);
+        getAds();
+    }, [getAds]);
 
     const onSubmit = (data) => {
-        console.log(data);
+        setState({
+            filters: {
+                tag: state.filters.tag,
+                type: data.tipo.value,
+                price: data.precios.value,
+                name: data.anuncio,
+            }
+        });
+        getAds(state.filters);
     };
-
-    const searchTag = (categoria) => {
-        switch (categoria) {
-            case 'all':
-                console.log(categoria);
-            case 'game':
-            case 'motor':
-            case 'movil':
-            case 'pc':
-            case 'sport':
-            case 'electro':
-        }
-    }
 
     return(
         <React.Fragment>
@@ -72,54 +95,81 @@ export default function HomeAnuncios(props) {
                         <Typography variant="h6" color="textSecondary">Selecciona una categoria</Typography>
                     </div>
                     <div className="iconsearch">
-                        <IconButton aria-label="todos los anuncios" onClickCapture={searchTag('all')}>
-                            <RemoveRedEyeRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: ''}})}>
+                            { state.filters.tag === '' ?
+                                <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }}/> :
+                                <RemoveRedEyeRounded fontSize="large"/>
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <SportsEsports fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'game'}})}>
+                            {state.filters.tag === 'game' ?
+                                <SportsEsports fontSize="large" style={{color: '#03a9f4'}}/> :
+                                < SportsEsports fontSize = "large" />
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <DriveEtaRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'motor'}})}>
+                            {state.filters.tag === 'motor' ?
+                                <DriveEtaRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                <DriveEtaRounded fontSize="large"/>
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <PhoneIphoneRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'mobile'}})}>
+                            {state.filters.tag === 'mobile' ?
+                                <PhoneIphoneRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                <PhoneIphoneRounded fontSize="large"/>
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <ComputerRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'pc'}})}>
+                            {state.filters.tag === 'pc' ?
+                                <ComputerRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                <ComputerRounded fontSize="large"/>
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <SportsBasketballRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'sports'}})}>
+                            {state.filters.tag === 'sports' ?
+                                <SportsBasketballRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                <SportsBasketballRounded fontSize="large"/>
+                            }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" >
-                            <LocalLaundryServiceRounded fontSize="large"/>
+                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'electro'}})}>
+                            {state.filters.tag === 'electro' ?
+                                <LocalLaundryServiceRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                <LocalLaundryServiceRounded fontSize="large"/>
+                            }
                         </IconButton>
                     </div>
                     <div className="selectores">
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <Controller
-                                name="anuncio"
-                                as={<TextField label="Nombre anuncio" variant="outlined"/>}
-                                control={control}
-                                defaultValue=""
-                            />
-                            <Controller
-                                name="tipo"
-                                as={<Select variant="outlined" label="compra/venta"/>}
-                                control={control}
-                                defaultValue=""
-                            />
-                            <Controller
-                                name="precios"
-                                as={<Select variant="outlined"/>}
-                                control={control}
-                                defaultValue=""
-                            />
-                            <Controller
-                                name="limite"
-                                as={<Select variant="outlined"/>}
-                                control={control}
-                                defaultValue=""
-                            />
+                        <form onSubmit={handleSubmit(onSubmit)} className="formSearch">
+                            <div className="filtrosSelect">
+                                <Controller
+                                    name="anuncio"
+                                    as={<TextField variant="outlined" label="Nombre anuncio" className="controller" />}
+                                    control={control}
+                                    defaultValue=""
+                                />
+                                <Controller
+                                    name="tipo"
+                                    as={<ReactSelect className="controller" placeholder="Compra/Venta"/>}
+                                    control={control}
+                                    options={optionsType}
+                                    defaultValue=""
+                                    isClearable
+                                    onChange={([selected]) => {
+                                        return { value: selected };
+                                    }}
+                                />
+                                <Controller
+                                    name="precios"
+                                    as={<ReactSelect className="controller" placeholder="Rango de precios" />}
+                                    control={control}
+                                    options={optionsPrice}
+                                    isClearable
+                                    defaultValue=""
+                                    onChange={([selected]) => {
+                                        return { value: selected };
+                                    }}
+                                />
+                            </div>
                             <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
                                 Buscar
                             </Button>
