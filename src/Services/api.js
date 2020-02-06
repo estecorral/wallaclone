@@ -16,7 +16,7 @@ const setNewUser = async (user) => {
         console.log(e.message);
         throw new Error(e.message);
     }
-}
+};
 
 const getAds = async () => {
     try {
@@ -33,14 +33,11 @@ const filterAds = async (filters) => {
     console.log(filters);
     try {
         if (filters.tag && !filters.venta && !filters.price && !filters.name) {
-            console.log('CASE 1');
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}`).then(res => res.data.result);
         } else if (filters.tipo.value === true || filters.tipo.value === false) {
-            console.log('CASE 2');
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&venta=${filters.tipo.value}&nombre=${filters.name}`)
                 .then(res => res.data.result);
         } else {
-            console.log('CASE 3');
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&nombre=${filters.name}`)
                 .then(res => res.data.result);
         }
@@ -49,7 +46,7 @@ const filterAds = async (filters) => {
         console.log(e.message);
         throw new Error(e.message);
     }
-}
+};
 
 const getTags = async () => {
     try {
@@ -60,11 +57,24 @@ const getTags = async () => {
         console.log(e.message);
         throw new Error(e.message);
     }
-}
+};
+
+const getSession = async (user) => {
+    try {
+        return await axios.post(`${API_URL}/login`, user).then(res => {
+            console.log(res.data);
+            return res.data;
+        })
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
 
 export {
     setNewUser,
     getAds,
     getTags,
     filterAds,
+    getSession,
 }

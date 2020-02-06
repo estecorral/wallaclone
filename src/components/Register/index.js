@@ -5,6 +5,7 @@ import Register from './Register';
 import { fetchNewUser } from "../../store/actions";
 
 function mapStateToProps(state) {
+    console.log(getRegistUser(state));
     return {
         regUser: getRegistUser(state),
     };

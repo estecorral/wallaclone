@@ -15,11 +15,13 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Login(props) {
-    const { handleSubmit, errors, control } = useForm()
+export default function Login({login, sessionUser}) {
+    const { handleSubmit, errors, control } = useForm();
     const onSubmit = (data) => {
-        console.log('log usser', data);
-    }
+        console.log('log user', data);
+        login(data);
+    };
+
     const classes = buttonStyles();
 
     const setAlerts = (err) => {
@@ -53,7 +55,7 @@ export default function Login(props) {
                         Inicio de Sesión
                     </Typography>
                     <Typography  color="textSecondary">
-                        Escribe tus usuario y contraseña
+                        Escribe tu usuario y contraseña
                     </Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Controller
@@ -81,6 +83,11 @@ export default function Login(props) {
                 </CardContent>
             </Card>
             {setAlerts(errors)}
+            <Snackbar open={!sessionUser.success} autoHideDuration={6000}>
+                <Alert severity="error">
+                    Usuario o contraseña erroneos
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

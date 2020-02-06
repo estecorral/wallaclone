@@ -14,11 +14,10 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Register(props) {
+export default function Register({regNewUser, regUser}) {
     const { handleSubmit, errors, control } = useForm();
     const onSubmit = (data) => {
-        props.regNewUser(data);
-        console.log(props);
+        regNewUser(data);
     };
 
     const classes = buttonStyles();
@@ -57,6 +56,7 @@ export default function Register(props) {
 
     return (
         <div className="Register">
+            {console.log(regUser)}
             <Card className="card" variant="outlined">
                     <CardContent className="card-content">
                         <Typography variant="h5" component="h2">
@@ -100,7 +100,7 @@ export default function Register(props) {
                     </CardContent>
             </Card>
             {setAlerts(errors)}
-            <Snackbar open={!props.regUser} autoHideDuration={6000}>
+            <Snackbar open={!regUser} autoHideDuration={6000}>
                 <Alert severity="error">
                     Username o email ya están en uso
                 </Alert>

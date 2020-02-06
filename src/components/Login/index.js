@@ -2,11 +2,18 @@ import { connect } from 'react-redux';
 
 import Login from './Login';
 
-import { fetchNewUser } from "../../store/actions";
+import { fetchSession } from "../../store/actions";
+import {getSession} from "../../store/selectors";
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapStateToProps(state) {
+    console.log(getSession(state));
     return {
-        session: user => dispatch(fetchNewUser(user), ownProps.push),
+        sessionUser: getSession(state),
     };
 }
-export default connect(null, mapDispatchToProps)(Login);
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        login: user => dispatch(fetchSession(user), ownProps.push),
+    };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

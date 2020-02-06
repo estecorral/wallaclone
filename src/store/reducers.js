@@ -5,17 +5,29 @@ const defaultState = {
     regUser: true,
     ads: [],
     tags: [],
+    session: { success: true },
     ui: {
         loading: false,
         error: null,
     }
 };
 
-export const registUser = (state = defaultState.regUser, action) => {
+export const regUser = (state = defaultState.regUser, action) => {
     switch (action.type) {
         case types.REGISTER_USER_SUCCESFULL:
             return action.regUser;
         case types.REGISTER_USER_FAILURE:
+            return action.error;
+        default:
+            return state;
+    }
+};
+
+export const session = (state = defaultState.session, action) => {
+    switch (action.type) {
+        case types.SESSION_USER_SUCCESFULL:
+            return action.session;
+        case types.SESSION_USER_FAILURE:
             return action.error;
         default:
             return state;
@@ -45,9 +57,10 @@ export const tags = (state = defaultState.tags, action) => {
 };
 
 const reducer = combineReducers({
-   registUser,
+   regUser,
     ads,
     tags,
+    session,
 });
 
 export default reducer;

@@ -1,16 +1,15 @@
 import * as types from './types';
-import {setNewUser, getAds, getTags, filterAds} from "../Services/api";
+import {setNewUser, getAds, getTags, filterAds, getSession} from "../Services/api";
 import { push } from 'connected-react-router';
 
 /**
     Gestión de registro de nuevo usuario
  **/
 export const fetchNewUser = (user) => {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         dispatch(registerUserRequest());
         try {
             const newUser = await setNewUser(user);
-            console.log(newUser);
             dispatch(registerUserSuccesfull(newUser));
             if(newUser) {
                 dispatch(push('/login'));
@@ -19,7 +18,7 @@ export const fetchNewUser = (user) => {
             dispatch(registerUserFailure(e));
         }
     }
-}
+};
 
 export const registerUserRequest = () => ({
     type: types.REGISTER_USER_REQUEST,
@@ -36,10 +35,38 @@ export const registerUserFailure = error => ({
 });
 
 /**
+ *  Login, recuperar token de usuario que se ha logeado satisfatoriamente
+ */
+export const fetchSession = (user) => {
+    return async function (dispatch) {
+        try {
+            const session = await getSession(user);
+            console.log(session);
+            dispatch(getSessionSuccesfull(session));
+            if(session.success) {
+                dispatch(push('/'));
+            }
+        }catch (e) {
+            dispatch(getSessionFailure(e));
+        }
+    }
+};
+
+export const getSessionSuccesfull = session => ({
+    type: types.SESSION_USER_SUCCESFULL,
+    session,
+});
+
+export const getSessionFailure = error => ({
+    type: types.SESSION_USER_FAILURE,
+    error,
+});
+
+/**
  Gestión recuperar los anuncios
  **/
 export const fetchAds = () => {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         dispatch(getAdsRequest());
         try {
             const ads = await getAds();
@@ -69,7 +96,7 @@ export const getAdsFailure = error => ({
  **/
 
 export const fetchTags = () => {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         dispatch(getTagsRequest());
         try {
             const tags = await getTags();
@@ -99,7 +126,7 @@ export const getTagsFailure = error => ({
  **/
 
 export const fetchFilterAds = (filters) => {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         dispatch(getAdsRequest());
         try {
             const ads = await filterAds(filters);
