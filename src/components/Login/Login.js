@@ -18,7 +18,7 @@ function Alert(props) {
 export default function Login(props) {
     const { handleSubmit, errors, control } = useForm()
     const onSubmit = (data) => {
-        console.log('log usser');
+        console.log('log usser', data);
     }
     const classes = buttonStyles();
 
@@ -43,7 +43,7 @@ export default function Login(props) {
                 </Snackbar>
             );
         }
-    }
+    };
 
     return (
         <div className="Register">

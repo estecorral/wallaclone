@@ -30,8 +30,21 @@ const getAds = async () => {
 };
 
 const filterAds = async (filters) => {
+    console.log(filters);
     try {
-        return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}`).then(res => res.data.result);
+        if (filters.tag && !filters.venta && !filters.price && !filters.name) {
+            console.log('CASE 1');
+            return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}`).then(res => res.data.result);
+        } else if (filters.tipo.value === true || filters.tipo.value === false) {
+            console.log('CASE 2');
+            return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&venta=${filters.tipo.value}&nombre=${filters.name}`)
+                .then(res => res.data.result);
+        } else {
+            console.log('CASE 3');
+            return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&nombre=${filters.name}`)
+                .then(res => res.data.result);
+        }
+
     }catch (e) {
         console.log(e.message);
         throw new Error(e.message);

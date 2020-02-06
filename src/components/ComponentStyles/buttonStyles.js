@@ -37,7 +37,7 @@ const navStyles = makeStyles((theme: Theme) =>
             width: '60%',
         },
         nav: {
-          background: '#4fc3f7',
+          background: '#039be5',
         },
         menuButton: {
             marginRight: theme.spacing(2),

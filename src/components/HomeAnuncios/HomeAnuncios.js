@@ -1,18 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import {navStyles} from "../ComponentStyles/buttonStyles";
 import {SportsEsports, DriveEtaRounded, PhoneIphoneRounded, ComputerRounded, SportsBasketballRounded,
     LocalLaundryServiceRounded, RemoveRedEyeRounded, FavoriteOutlined, EuroSymbolRounded } from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import './HomeAnuncios.css'
 import {Controller, useForm} from "react-hook-form";
 import CardActions from "@material-ui/core/CardActions";
@@ -20,13 +15,19 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import Chip from "@material-ui/core/Chip";
 import ReactSelect from 'react-select';
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import AlertTitle from "@material-ui/lab/AlertTitle";
+import NavBar from "../NavBar";
 
 const optionsType = [
+    { value: "", label: "Compra/venta"},
     { value: false, label: "Compra" },
     { value: true, label: "Venta" }
 ];
 
 const optionsPrice = [
+    { value: "", label: "" },
     { value: "1-100", label: "1-100" },
     { value: "101-500", label: "101-500" },
     { value: "501-2000", label: "501-2000" },
@@ -34,59 +35,32 @@ const optionsPrice = [
     { value: "5001-10000", label: "5001-10000" }
 ];
 
-
-export default function HomeAnuncios(props) {
-    const { handleSubmit, errors, control } = useForm();
-    const [state, setState] = useState( {
-        filters: {
-            tag: '',
-            price: '',
+export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
+    const { handleSubmit, control } = useForm();
+    const [tag, setTagState] = useState('');
+    const [state, setState] = useState({
+            tag: tag,
             name: '',
-            type: '',
-        }
-    });
+            tipo: '',
+            precios: '',
+        });
 
     const classes = navStyles();
 
     const getAds = useCallback(
         filters => {
-            filters ? props.getFilterAds(filters) : props.getAllAds();
-        }, [props.getFilterAds, props.getAllAds]
+            filters ? getFilterAds(filters) : getAllAds();
+        }, [getFilterAds, getAllAds]
     );
 
     useEffect(() => {
         getAds();
     }, [getAds]);
 
-    const onSubmit = (data) => {
-        setState({
-            filters: {
-                tag: state.filters.tag,
-                type: data.tipo.value,
-                price: data.precios.value,
-                name: data.anuncio,
-            }
-        });
-        getAds(state.filters);
-    };
-
     return(
         <React.Fragment>
             <div className="homeAnuncios">
-                <div className={classes.root}>
-                    <AppBar position="static">
-                        <Toolbar className={classes.nav}>
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography variant="h6" className={classes.title}>
-                                Wallaclone
-                            </Typography>
-                            <Button color="inherit">Registro</Button>
-                            <Button color="inherit">Login</Button>
-                        </Toolbar>
-                    </AppBar>
-                </div>
+               <NavBar/>
                 <div className="searcher">
                     <div className="title">
                         <Typography variant="h5">Encuentra lo que buscas</Typography>
@@ -95,82 +69,80 @@ export default function HomeAnuncios(props) {
                         <Typography variant="h6" color="textSecondary">Selecciona una categoria</Typography>
                     </div>
                     <div className="iconsearch">
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: ''}})}>
-                            { state.filters.tag === '' ?
-                                <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }}/> :
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( '')}}>
+                            { tag === '' ?
+                                <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }} /> :
                                 <RemoveRedEyeRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'game'}})}>
-                            {state.filters.tag === 'game' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'game')}}>
+                            {tag === 'game' ?
                                 <SportsEsports fontSize="large" style={{color: '#03a9f4'}}/> :
                                 < SportsEsports fontSize = "large" />
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'motor'}})}>
-                            {state.filters.tag === 'motor' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'motor')}}>
+                            {tag === 'motor' ?
                                 <DriveEtaRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <DriveEtaRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'mobile'}})}>
-                            {state.filters.tag === 'mobile' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'mobile')}}>
+                            {tag === 'mobile' ?
                                 <PhoneIphoneRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <PhoneIphoneRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'pc'}})}>
-                            {state.filters.tag === 'pc' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'pc')}}>
+                            {tag === 'pc' ?
                                 <ComputerRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <ComputerRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'sports'}})}>
-                            {state.filters.tag === 'sports' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'sports')}}>
+                            {tag === 'sports' ?
                                 <SportsBasketballRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <SportsBasketballRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => setState({ filters: {tag: 'electro'}})}>
-                            {state.filters.tag === 'electro' ?
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'electro')}}>
+                            {tag === 'electro' ?
                                 <LocalLaundryServiceRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <LocalLaundryServiceRounded fontSize="large"/>
                             }
                         </IconButton>
                     </div>
                     <div className="selectores">
-                        <form onSubmit={handleSubmit(onSubmit)} className="formSearch">
+                        <form onSubmit={handleSubmit(state => { setState(state); getAds({tag, ...state})})} className="formSearch">
                             <div className="filtrosSelect">
                                 <Controller
-                                    name="anuncio"
-                                    as={<TextField variant="outlined" label="Nombre anuncio" className="controller" />}
+                                    name="name"
+                                    as={<TextField variant="outlined" label="Nombre anuncio" className="controller"/>}
                                     control={control}
                                     defaultValue=""
                                 />
                                 <Controller
                                     name="tipo"
-                                    as={<ReactSelect className="controller" placeholder="Compra/Venta"/>}
+                                    as={<ReactSelect className="controller" placeholder="Compra/Venta" />}
                                     control={control}
                                     options={optionsType}
-                                    defaultValue=""
-                                    isClearable
+                                    defaultValue={optionsType[0]}
                                     onChange={([selected]) => {
                                         return { value: selected };
                                     }}
                                 />
                                 <Controller
                                     name="precios"
-                                    as={<ReactSelect className="controller" placeholder="Rango de precios" />}
+                                    as={<ReactSelect className="controller" placeholder="Rango de precios"/>}
                                     control={control}
                                     options={optionsPrice}
-                                    isClearable
-                                    defaultValue=""
+                                    defaultValue={optionsPrice[0]}
                                     onChange={([selected]) => {
                                         return { value: selected };
                                     }}
                                 />
                             </div>
-                            <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
+                            <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit" >
                                 Buscar
                             </Button>
                         </form>
@@ -178,7 +150,14 @@ export default function HomeAnuncios(props) {
                 </div>
                 <div className="cardList">
                     {
-                        props.ads.length === 0 ? <div>Cargando</div> : props.ads.map(ad => (
+                        ads.length === 0 ?
+                            <Snackbar  open={ads.length === 0} autoHideDuration={6000}>
+                                <Alert severity="warning">
+                                    <AlertTitle>Info</AlertTitle>
+                                    No se han encontrado anuncios
+                                </Alert>
+                            </Snackbar>:
+                            ads.map(ad => (
                             <Card className={classes.card} key={ad._id}>
                                 <CardHeader
                                     title={ad.nombre.slice(0,20)}
