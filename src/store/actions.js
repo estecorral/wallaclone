@@ -63,6 +63,19 @@ export const getSessionFailure = error => ({
 });
 
 /**
+ *  Logout
+ */
+
+export const logout = () => (dispatch) => {
+  dispatch(setLogout());
+  dispatch(push('/'));
+};
+
+export const setLogout = () => ({
+    type: types.LOGOUT,
+});
+
+/**
  Gestión recuperar los anuncios
  **/
 export const fetchAds = () => {

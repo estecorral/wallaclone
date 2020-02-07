@@ -5,7 +5,7 @@ const defaultState = {
     regUser: true,
     ads: [],
     tags: [],
-    session: { success: true },
+    session: { success: false },
     ui: {
         loading: false,
         error: null,
@@ -29,6 +29,8 @@ export const session = (state = defaultState.session, action) => {
             return action.session;
         case types.SESSION_USER_FAILURE:
             return action.error;
+        case types.LOGOUT:
+            return defaultState.session;
         default:
             return state;
     }

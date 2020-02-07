@@ -4,6 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from 'history';
 import Root from "./components/Root";
 import {configureStore} from "./store";
+import { restoreUser, saveUser, deleteStorage } from './storage/storage';
 
 import './index.css';
 
@@ -11,10 +12,22 @@ const history = createBrowserHistory();
 
 const store = configureStore();
 
+const session = {session: restoreUser() ||  undefined } ;
+
 const rootProps = {
     history,
     store,
-}
+    session
+};
+
+store.subscribe(() => {
+    const { session } = store.getState();
+    if(session !== undefined) {
+        saveUser(session);
+    } else {
+        deleteStorage();
+    }
+});
 
 ReactDOM.render(<Root {...rootProps}/>, document.getElementById('root'));
 

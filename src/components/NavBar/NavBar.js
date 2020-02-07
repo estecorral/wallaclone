@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import {navStyles} from "../ComponentStyles/buttonStyles";
 
-export default function NavBar() {
+export default function NavBar({session, logout}) {
     const classes = navStyles();
 
     return (
@@ -22,8 +22,18 @@ export default function NavBar() {
                     <Typography variant="h6" className={classes.title}>
                         Wallaclone
                     </Typography>
-                    <Button color="inherit" component={Link} to="/register">Registro</Button>
-                    <Button color="inherit" component={Link} to="/login">Login</Button>
+                    {session.success && (
+                        <div>
+                            Bienvenido: <b>{session.session.username}</b>
+                            <Button color="inherit" onClick={logout}>logout</Button>
+                        </div>
+                    )}
+                    {!session.success && (
+                        <div>
+                            <Button color="inherit" component={Link} to="/register">Registro</Button>
+                            <Button color="inherit" component={Link} to="/login">Login</Button>
+                        </div>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>

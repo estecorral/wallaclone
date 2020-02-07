@@ -83,7 +83,7 @@ export default function Login({login, sessionUser}) {
                 </CardContent>
             </Card>
             {setAlerts(errors)}
-            <Snackbar open={!sessionUser.success} autoHideDuration={6000}>
+            <Snackbar open={sessionUser.error === 'Usuario o contraseña incorrectos'} autoHideDuration={6000}>
                 <Alert severity="error">
                     Usuario o contraseña erroneos
                 </Alert>
