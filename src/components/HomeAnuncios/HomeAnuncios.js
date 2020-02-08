@@ -39,7 +39,6 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
     const { handleSubmit, control } = useForm();
     const [tag, setTagState] = useState('');
     const [state, setState] = useState({
-            tag: tag,
             name: '',
             tipo: '',
             precios: '',
@@ -57,6 +56,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
         getAds();
     }, [getAds]);
 
+
     return(
         <React.Fragment>
             <div className="homeAnuncios">
@@ -69,43 +69,43 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
                         <Typography variant="h6" color="textSecondary">Selecciona una categoria</Typography>
                     </div>
                     <div className="iconsearch">
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( '')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( ''); getAds({tag: 'all', ...state})}}>
                             { tag === '' ?
                                 <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }} /> :
                                 <RemoveRedEyeRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'game')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'game'); getAds({tag: 'game', ...state})}}>
                             {tag === 'game' ?
                                 <SportsEsports fontSize="large" style={{color: '#03a9f4'}}/> :
                                 < SportsEsports fontSize = "large" />
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'motor')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'motor'); getAds({tag: 'motor', ...state})}}>
                             {tag === 'motor' ?
                                 <DriveEtaRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <DriveEtaRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'mobile')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'mobile'); getAds({tag: 'mobile', ...state})}}>
                             {tag === 'mobile' ?
                                 <PhoneIphoneRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <PhoneIphoneRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'pc')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'pc'); getAds({tag: 'pc', ...state})}}>
                             {tag === 'pc' ?
                                 <ComputerRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <ComputerRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'sports')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'sports'); getAds({tag: 'sports', ...state})}}>
                             {tag === 'sports' ?
                                 <SportsBasketballRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <SportsBasketballRounded fontSize="large"/>
                             }
                         </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'electro')}}>
+                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'electro'); getAds({tag: 'electro', ...state})}}>
                             {tag === 'electro' ?
                                 <LocalLaundryServiceRounded fontSize="large" style={{color: '#03a9f4'}}/> :
                                 <LocalLaundryServiceRounded fontSize="large"/>
