@@ -1,5 +1,5 @@
 import * as types from './types';
-import {setNewUser, getAds, getTags, filterAds, getSession} from "../Services/api";
+import {setNewUser, getAds, getTags, filterAds, getSession, getAd} from "../Services/api";
 import { push } from 'connected-react-router';
 
 /**
@@ -104,6 +104,34 @@ export const getAdsFailure = error => ({
     error,
 });
 
+/**
+ * Recupera un ad por su id
+ */
+export const fetchAd = (id) => {
+    return async function (dispatch) {
+        dispatch(getAdRequest());
+        try {
+            const ad = await getAd(id);
+            dispatch(getAdSuccesfull(ad));
+        } catch (e) {
+            dispatch(getAdFailure(e));
+        }
+    }
+}
+
+export const getAdRequest = () => ({
+    type: types.GET_AD_REQUEST,
+});
+
+export const getAdSuccesfull = ad => ({
+    type: types.GET_AD_SUCCESFULL,
+    ad,
+});
+
+export const getAdFailure = error => ({
+    type: types.GET_AD_FAILURE,
+    error,
+});
 /**
  *  Recoge los tags disponibles
  **/

@@ -1,5 +1,5 @@
 import {makeStyles, createStyles, Theme} from "@material-ui/core/styles";
-import {grey, lightBlue} from "@material-ui/core/colors";
+import {grey, lightBlue, red} from "@material-ui/core/colors";
 
 
 const buttonStyles = makeStyles({
@@ -62,20 +62,36 @@ const navStyles = makeStyles((theme: Theme) =>
           fontSize: '50px'
         },
         card: {
-            width: '24vw',
-            height: '32vh',
-            marginLeft: '0.4vw',
-            marginRight:'0.4vw',
-            marginTop: '20px',
+            display: 'flex',
+            width: '60%',
+            margin: '5px',
         },
-        cardmedia: {
+        buttonCard: {
+            display: 'flex',
+            flexDirection: 'row',
             width: '100%',
-            height: '50%',
-            background: 'cover',
         },
-        cardactions: {
-            margin: '0',
-            padding: '0px',
+        details: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '75%',
+        },
+        content: {
+            flex: '1 0 auto',
+        },
+        cover: {
+            width: '25%',
+        },
+        avatar: {
+            backgroundColor: red[500],
+        },
+        cardDetail: {
+            margin: '20px',
+            width: '60%',
+        },
+        media: {
+            height: 0,
+            paddingTop: '56.25%', // 16:9
         },
     }),
 );

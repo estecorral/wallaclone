@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 const defaultState = {
     regUser: true,
     ads: [],
+    ad: {},
     tags: [],
     session: { success: false },
     ui: {
@@ -47,6 +48,17 @@ export const ads = (state = defaultState.ads, action) => {
     }
 };
 
+export const ad = (state = defaultState.ad, action) => {
+    switch (action.type) {
+        case types.GET_AD_SUCCESFULL:
+            return action.ad;
+        case types.GET_AD_FAILURE:
+            return action.error;
+        default:
+            return state;
+    }
+};
+
 export const tags = (state = defaultState.tags, action) => {
     switch (action.type) {
         case types.GET_TAGS_SUCCESFULL:
@@ -63,6 +75,7 @@ const reducer = combineReducers({
     ads,
     tags,
     session,
+    ad,
 });
 
 export default reducer;

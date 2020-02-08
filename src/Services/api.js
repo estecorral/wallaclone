@@ -18,6 +18,18 @@ const setNewUser = async (user) => {
     }
 };
 
+const getSession = async (user) => {
+    try {
+        return await axios.post(`${API_URL}/login`, user).then(res => {
+            console.log(res.data);
+            return res.data;
+        })
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const getAds = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios`).then(res => {
@@ -28,6 +40,16 @@ const getAds = async () => {
         throw new Error(e.message);
     }
 };
+
+const getAd = async (id) => {
+    console.log(id);
+    try {
+        return await axios.get(`${API_URL}/anuncios/${id}`).then(res => res.data.result);
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+}
 
 const filterAds = async (filters) => {
     console.log(filters);
@@ -59,22 +81,11 @@ const getTags = async () => {
     }
 };
 
-const getSession = async (user) => {
-    try {
-        return await axios.post(`${API_URL}/login`, user).then(res => {
-            console.log(res.data);
-            return res.data;
-        })
-    }catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-    }
-};
-
 export {
     setNewUser,
     getAds,
     getTags,
     filterAds,
     getSession,
+    getAd,
 }
