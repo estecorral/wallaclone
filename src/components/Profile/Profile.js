@@ -9,28 +9,26 @@ import Button from "@material-ui/core/Button";
 
 import './Profile.css';
 
-export default function Profile({session}) {
+export default function Profile({ session, deleteUser }) {
     const classes = navStyles();
-
-    console.log(session);
 
     return (
         <div className="profile">
             <NavBar/>
             {Object.keys(session).length !== 0 ?
                 <div className="cardContend">
-                    <Card className={classes.root}>
+                    <Card className={classes.cardProfile}>
                         <CardContent>
                             <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                Usuario: {session.session.username}
+                               <b>Usuario:</b> {session.session.username}
                             </Typography>
                             <Typography className={classes.pos} color="textSecondary">
-                                Email: {session.session.email}
+                                <b>Email:</b> {session.session.email}
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">Editar</Button>
-                            <Button size="small">Dar de baja</Button>
+                            <Button className={classes.buttonBlue2} size="small">Editar</Button>
+                            <Button className={classes.buttonRed} size="small" onClick={deleteUser(session.session.id)}>Dar de baja</Button>
                         </CardActions>
                     </Card>
                 </div> :

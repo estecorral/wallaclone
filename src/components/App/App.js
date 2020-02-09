@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Register from '../Register';
@@ -7,8 +7,19 @@ import HomeAnuncios from "../HomeAnuncios";
 import Detail from "../Detail";
 import PrivateRoute from "../PrivateRoute";
 import Profile from "../Profile";
+import { restoreUser, saveUser, deleteStorage } from '../../storage/storage';
 
-const App = () => (
+
+const App = ({session, updateSession}) => {
+    const restSession = restoreUser();
+
+    useEffect(() => {
+        if (restSession.success) {
+            updateSession(restSession);
+        }
+    }, []);
+
+    return (
         <Switch>
             <Route path="/register" exact component={Register} />
             <Route path='/login' exact component={Login}/>
@@ -16,6 +27,6 @@ const App = () => (
             <Route path='/detail/:name/:id' exact component={Detail}/>
             <PrivateRoute path="/profile" exact component={Profile}/>
         </Switch>
-);
+)};
 
 export default App;

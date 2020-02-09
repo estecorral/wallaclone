@@ -1,7 +1,7 @@
 import * as types from './types';
-import {setNewUser, getAds, getTags, filterAds, getSession, getAd} from "../Services/api";
+import {setNewUser, getAds, getTags, filterAds, getSession, getAd, deleteUser } from "../Services/api";
 import { push } from 'connected-react-router';
-
+import { deleteStorage } from '../storage/storage';
 /**
     Gestión de registro de nuevo usuario
  **/
@@ -41,7 +41,6 @@ export const fetchSession = (user) => {
     return async function (dispatch) {
         try {
             const session = await getSession(user);
-            console.log(session);
             dispatch(getSessionSuccesfull(session));
             if(session.success) {
                 dispatch(push('/'));
@@ -67,12 +66,29 @@ export const getSessionFailure = error => ({
  */
 
 export const logout = () => (dispatch) => {
-  dispatch(setLogout());
-  dispatch(push('/'));
+    deleteStorage();
+    dispatch(setLogout());
+    dispatch(push('/'));
 };
 
 export const setLogout = () => ({
     type: types.LOGOUT,
+});
+
+/**
+ *  Delete user
+ */
+export const fetchDeleteUser = (id) => (dispatch) => {
+    return async function (dispatch) {
+        const res = await deleteUser(id);
+        //dispatch(deleteUser());
+        //deleteStorage();
+        //dispatch(push('/'));
+    };
+};
+
+export const deleteU = () => ({
+    type: types.DELETE_PROFILE,
 });
 
 /**

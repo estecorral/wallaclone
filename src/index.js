@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import { createBrowserHistory } from 'history';
 import Root from "./components/Root";
 import {configureStore} from "./store";
-import { restoreUser, saveUser, deleteStorage } from './storage/storage';
+import { restoreUser, saveUser } from './storage/storage';
 
 import './index.css';
 
@@ -22,10 +22,9 @@ const rootProps = {
 
 store.subscribe(() => {
     const { session } = store.getState();
-    if(session !== undefined) {
+    console.log(session);
+    if(session.success) {
         saveUser(session);
-    } else {
-        deleteStorage();
     }
 });
 

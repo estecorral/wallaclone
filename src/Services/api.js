@@ -21,9 +21,30 @@ const setNewUser = async (user) => {
 const getSession = async (user) => {
     try {
         return await axios.post(`${API_URL}/login`, user).then(res => {
-            console.log(res.data);
             return res.data;
-        })
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const deleteUser = async (id) => {
+    try {
+        return await axios.delete(`${API_URL}/register/${id}`).then(res => {
+            return res.data;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const updateUser = async (id, user) => {
+    try {
+        return await axios.put(`${API_URL}/register/${id}`, user).then(res => {
+            return res.data;
+        });
     }catch (e) {
         console.log(e.message);
         throw new Error(e.message);
@@ -87,4 +108,6 @@ export {
     filterAds,
     getSession,
     getAd,
+    deleteUser,
+    updateUser,
 }
