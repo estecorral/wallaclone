@@ -1,5 +1,5 @@
 import {makeStyles, createStyles, Theme} from "@material-ui/core/styles";
-import {grey, lightBlue, red} from "@material-ui/core/colors";
+import {grey, red} from "@material-ui/core/colors";
 
 
 const buttonStyles = makeStyles({
@@ -88,10 +88,6 @@ const navStyles = makeStyles((theme: Theme) =>
         cardDetail: {
             margin: '20px',
             width: '60%',
-        },
-        media: {
-            height: 0,
-            paddingTop: '56.25%', // 16:9
         },
     }),
 );

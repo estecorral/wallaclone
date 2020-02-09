@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import { logout } from "../../store/actions";
 
 function mapStateToProps(state) {
-    console.log(getSession(state));
     return {
         session: getSession(state),
     };

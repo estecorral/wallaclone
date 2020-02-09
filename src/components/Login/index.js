@@ -6,7 +6,6 @@ import { fetchSession } from "../../store/actions";
 import {getSession} from "../../store/selectors";
 
 function mapStateToProps(state) {
-    console.log(getSession(state));
     return {
         sessionUser: getSession(state),
     };

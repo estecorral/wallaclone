@@ -42,7 +42,6 @@ const getAds = async () => {
 };
 
 const getAd = async (id) => {
-    console.log(id);
     try {
         return await axios.get(`${API_URL}/anuncios/${id}`).then(res => res.data.result);
     }catch (e) {

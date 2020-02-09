@@ -25,6 +25,7 @@ export default function NavBar({session, logout}) {
                     {session.success && (
                         <div>
                             Bienvenido: <b>{session.session.username}</b>
+                            <Button color="inherit" component={Link} to="/profile">Profile</Button>
                             <Button color="inherit" onClick={logout}>logout</Button>
                         </div>
                     )}
