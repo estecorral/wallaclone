@@ -69,15 +69,17 @@ const getAd = async (id) => {
         console.log(e.message);
         throw new Error(e.message);
     }
-}
+};
 
 const filterAds = async (filters) => {
-    console.log(filters);
     try {
         if (filters.tag && !filters.venta && !filters.price && !filters.name) {
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}`).then(res => res.data.result);
         } else if (filters.tipo.value === true || filters.tipo.value === false) {
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&venta=${filters.tipo.value}&nombre=${filters.name}`)
+                .then(res => res.data.result);
+        } else if (filters.usuario) {
+            return await axios.get(`${API_URL}/anuncios?usuario=${filters.usuario}`)
                 .then(res => res.data.result);
         } else {
             return await axios.get(`${API_URL}/anuncios?tag=${filters.tag}&precio=${filters.precios.value}&nombre=${filters.name}`)

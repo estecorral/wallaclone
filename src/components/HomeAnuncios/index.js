@@ -5,16 +5,17 @@ import {getAllAds, getAllTags} from "../../store/selectors";
 import {fetchAds, fetchTags, fetchFilterAds} from "../../store/actions";
 
 function mapStateToProps(state) {
+    console.log(getAllAds(state));
     return {
         ads: getAllAds(state),
         tags: getAllTags(state),
     };
 }
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
     return {
-        getAllAds: () => dispatch (fetchAds(), ownProps.push),
-        getAllTags: () => dispatch (fetchTags(), ownProps.push),
-        getFilterAds: (filters) => dispatch(fetchFilterAds(filters), ownProps.push),
+        getAllAds: () => dispatch (fetchAds()),
+        getAllTags: () => dispatch (fetchTags()),
+        getFilterAds: (filters) => dispatch(fetchFilterAds(filters)),
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeAnuncios);
