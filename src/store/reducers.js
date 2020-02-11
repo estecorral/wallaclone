@@ -34,6 +34,8 @@ export const session = (state = defaultState.session, action) => {
             return defaultState.session;
         case types.DELETE_PROFILE:
             return defaultState.session;
+        case types.DELETE_PROFILE_FAIL:
+            return action.error;
         default:
             return state;
     }

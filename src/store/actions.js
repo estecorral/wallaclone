@@ -78,17 +78,26 @@ export const setLogout = () => ({
 /**
  *  Delete user
  */
-export const fetchDeleteUser = (id) => (dispatch) => {
+export const fetchDeleteUser = (id) => {
     return async function (dispatch) {
-        const res = await deleteUser(id);
-        //dispatch(deleteUser());
-        //deleteStorage();
-        //dispatch(push('/'));
-    };
+        try {
+            const delUser = await deleteUser(id);
+            deleteStorage(delUser);
+            dispatch(deleteUSuccess());
+            dispatch(push('/'));
+        } catch (e) {
+            dispatch(deleteUFail(e));
+        }
+    }
 };
 
-export const deleteU = () => ({
+export const deleteUSuccess = () => ({
     type: types.DELETE_PROFILE,
+});
+
+export const deleteUFail = (error) => ({
+    type: types.DELETE_PROFILE_FAIL,
+    error,
 });
 
 /**

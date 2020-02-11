@@ -10,3 +10,15 @@
     align-items: center;
     width: 100%;
 }
+.inputForm {
+    display: flex;
+    flex-direction: column;
+}
+.controller {
+    width: 100%;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
