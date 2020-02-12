@@ -16,10 +16,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 
-export default function Profile({ session, deleteUser }) {
+export default function Profile({ session, deleteUser, updateUser }) {
     const classes = navStyles();
     const { handleSubmit, control } = useForm();
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = (data) => {
+        updateUser(session.session.id, data);
+    };
 
     const [open, setOpen] = React.useState(false);
     const [openEdit, setOpenEdit] = React.useState(false);

@@ -1,5 +1,8 @@
 import * as types from './types';
-import {setNewUser, getAds, getTags, filterAds, getSession, getAd, deleteUser } from "../Services/api";
+import {
+    setNewUser, getAds, getTags, filterAds,
+    getSession, getAd, deleteUser, updateUser, newAd
+} from "../Services/api";
 import { push } from 'connected-react-router';
 import { deleteStorage } from '../storage/storage';
 /**
@@ -101,6 +104,30 @@ export const deleteUFail = (error) => ({
 });
 
 /**
+ *  UPDATE User profile
+ */
+export const fetchUpdateUser = (id, user) => {
+    return async function (dispatch){
+        try {
+            const session = await updateUser(id, user);
+            dispatch(updateUserSuccess(session));
+        } catch (e) {
+            dispatch(updateUserFailure(e));
+        }
+    }
+};
+
+export const updateUserSuccess = (session) => ({
+    type: types.UPDATE_PROFILE_SUCCESS,
+        session,
+});
+
+export const updateUserFailure = (e) => ({
+    type: types.UPDATE_PROFILE_FAIL,
+    e,
+});
+
+/**
  Gestión recuperar los anuncios
  **/
 export const fetchAds = () => {
@@ -142,7 +169,7 @@ export const fetchAd = (id) => {
             dispatch(getAdFailure(e));
         }
     }
-}
+};
 
 export const getAdRequest = () => ({
     type: types.GET_AD_REQUEST,
@@ -155,6 +182,32 @@ export const getAdSuccesfull = ad => ({
 
 export const getAdFailure = error => ({
     type: types.GET_AD_FAILURE,
+    error,
+});
+
+/**
+ *  Crea un nuevo anuncio
+ */
+
+export const fetchNewAd = (token, ad) => {
+  return async function (dispatch) {
+      try {
+          console.log(ad);
+          await newAd(token, ad);
+          dispatch(createNewAd());
+      }catch (e) {
+          dispatch(createNewAdFail(e));
+      }
+
+  }
+};
+
+export const createNewAd = () => ({
+    type: types.NEW_AD_SUCCESFULL,
+});
+
+export const createNewAdFail = error => ({
+    type: types.NEW_AD_FAILURE,
     error,
 });
 /**

@@ -1,0 +1,32 @@
+.createAnuncio {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+}
+.inputForm {
+    display: flex;
+    flex-direction: column;
+}
+.controller {
+    width: 100%;
+    margin: 5px;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 60%;
+}
+.cardations {
+    width: 80%;
+}
+form {
+    width: 100%;
+}

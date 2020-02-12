@@ -9,6 +9,7 @@ import PrivateRoute from "../PrivateRoute";
 import Profile from "../Profile";
 import UserAnuncios from "../UserAnuncios";
 import { restoreUser } from '../../storage/storage';
+import CreateAnuncio from "../CreateAnuncio";
 
 
 const App = ({ updateSession }) => {
@@ -28,6 +29,7 @@ const App = ({ updateSession }) => {
             <Route path='/detail/:name/:id' exact component={Detail}/>
             <Route path='/anuncios/:username' exact component={UserAnuncios} />
             <PrivateRoute path="/profile" exact component={Profile}/>
+            <PrivateRoute path="/createanuncio" exact component={CreateAnuncio}/>
         </Switch>
 )};
 

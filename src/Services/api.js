@@ -92,6 +92,19 @@ const filterAds = async (filters) => {
     }
 };
 
+const newAd = async (token, ad) => {
+    try {
+        await axios.post(`${API_URL}/anuncios/`, ad,{
+            headers: { authorization: token },
+        }).then(() => {
+            return 'Anuncio guardado correctamente'
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const getTags = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios/tags`).then(res => {
@@ -112,4 +125,5 @@ export {
     getAd,
     deleteUser,
     updateUser,
+    newAd,
 }
