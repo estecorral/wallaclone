@@ -84,8 +84,8 @@ export const setLogout = () => ({
 export const fetchDeleteUser = (id) => {
     return async function (dispatch) {
         try {
-            const delUser = await deleteUser(id);
-            deleteStorage(delUser);
+            await deleteUser(id);
+            deleteStorage();
             dispatch(deleteUSuccess());
             dispatch(push('/'));
         } catch (e) {
@@ -110,16 +110,15 @@ export const fetchUpdateUser = (id, user) => {
     return async function (dispatch){
         try {
             const session = await updateUser(id, user);
-            dispatch(updateUserSuccess(session));
+            dispatch(updateUserSuccess());
         } catch (e) {
             dispatch(updateUserFailure(e));
         }
     }
 };
 
-export const updateUserSuccess = (session) => ({
+export const updateUserSuccess = () => ({
     type: types.UPDATE_PROFILE_SUCCESS,
-        session,
 });
 
 export const updateUserFailure = (e) => ({
@@ -192,9 +191,9 @@ export const getAdFailure = error => ({
 export const fetchNewAd = (token, ad) => {
   return async function (dispatch) {
       try {
-          console.log(ad);
           await newAd(token, ad);
           dispatch(createNewAd());
+          dispatch(push('/'));
       }catch (e) {
           dispatch(createNewAdFail(e));
       }
@@ -249,7 +248,6 @@ export const fetchFilterAds = (filters) => {
         dispatch(getAdsRequest());
         try {
             const ads = await filterAds(filters);
-            console.log(ads, filters);
             dispatch(getAdsSuccesfull(ads));
         }catch (e) {
             dispatch(getAdsFailure(e));

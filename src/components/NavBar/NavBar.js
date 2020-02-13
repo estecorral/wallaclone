@@ -9,21 +9,59 @@ import { ControlPoint } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
 
 import {navStyles} from "../ComponentStyles/buttonStyles";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 export default function NavBar({session, logout}) {
     const classes = navStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar className={classes.nav}>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton edge="start" className={classes.menuButton} color="inherit"
+                                aria-label="menu" aria-controls="simple-menu" aria-haspopup="true"
+                                onClick={handleClick}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        Wallaclone
+
+                        {session.success && (
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}  component={Link} to="/profile">Profile</MenuItem>
+                                <MenuItem onClick={handleClose} component={Link} to={`/anuncios/${session.session.username}`}>Mis anuncios</MenuItem>
+                                <MenuItem onClick={handleClose} component={Link} to="/createanuncio">Añadir nuevo anuncio</MenuItem>
+                                <MenuItem onClick={handleClose}>Mis favoritos</MenuItem>
+                                <MenuItem onClick={logout}>Logout</MenuItem>
+                            </Menu>)
+                        }
+                        {!session.success && (
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose} component={Link} to="/register">Register</MenuItem>
+                                <MenuItem onClick={handleClose} component={Link} to="/login">Login</MenuItem>
+                            </Menu>)
+                        }
+                    <Typography variant="h6" component={Link} to="/" className={classes.title}>
+                       Wallaclone
                     </Typography>
                     {session.success && (
                         <div>
@@ -33,11 +71,6 @@ export default function NavBar({session, logout}) {
                             </Button>
                             <Button className={classes.buttonBlue2} component={Link} to="/profile">Profile</Button>
                             <Button className={classes.buttonRed} onClick={logout}>logout</Button>
-                            <Snackbar open={session.success}>
-                                <Alert severity="info">
-                                    Bienvenido: {session.session.username}
-                                </Alert>
-                            </Snackbar>
                         </div>
                     )}
                     {!session.success && (

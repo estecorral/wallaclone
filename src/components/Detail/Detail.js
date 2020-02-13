@@ -9,9 +9,11 @@ import CardActions from "@material-ui/core/CardActions";
 import {EuroSymbolRounded, FavoriteOutlined} from "@material-ui/icons";
 import {navStyles} from "../ComponentStyles/buttonStyles";
 import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 
 import './detail.css';
 import Chip from "@material-ui/core/Chip";
+import {Link} from "react-router-dom";
 
 export default function Detail({match, getAd, ad}) {
 
@@ -30,11 +32,11 @@ export default function Detail({match, getAd, ad}) {
                       <CardHeader
                           avatar={
                               <Avatar aria-label="recipe" className={classes.avatar}>
-                                  R
+                                  {ad.autor.username.slice(0, 1).toUpperCase()}
                               </Avatar>
                           }
                           title={ad.nombre}
-                          subheader="September 14, 2016"
+                          subheader={ad.date}
                       />
                           <img className="media" src={`http://localhost:3001/images/anuncios/${ad.foto}`} alt=""/>
                       <CardContent>
@@ -68,6 +70,12 @@ export default function Detail({match, getAd, ad}) {
                                   style={{backgroundColor:'#b3e5fc'}}
                               />
                           ))}
+                          Propietario:
+                          <Button component={Link} to={`/anuncios/${ad.autor.username}`}>
+                              <Chip label={ad.autor.username}
+                                    style={{backgroundColor:'#84ffff'}}
+                              />
+                          </Button>
                       </CardActions>
                   </Card> :
                       <div>Cargando</div>

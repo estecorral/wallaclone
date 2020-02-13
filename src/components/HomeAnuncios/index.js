@@ -5,7 +5,6 @@ import {getAllAds, getAllTags} from "../../store/selectors";
 import {fetchAds, fetchTags, fetchFilterAds} from "../../store/actions";
 
 function mapStateToProps(state) {
-    console.log(getAllAds(state));
     return {
         ads: getAllAds(state),
         tags: getAllTags(state),

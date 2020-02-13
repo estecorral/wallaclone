@@ -10,7 +10,7 @@ export const getSession = state => state.session;
 
 export const getAllAdsUser = state => username => {
       return  state.ads.filter(ad => {
-            if(ad.usuario === username) {
+            if(ad.autor.username === username) {
                 return ad;
             }
         });

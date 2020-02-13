@@ -37,7 +37,7 @@ export const session = (state = defaultState.session, action) => {
         case types.DELETE_PROFILE_FAIL:
             return action.error;
         case types.UPDATE_PROFILE_SUCCESS:
-            return action.session;
+            return defaultState.session;
         case types.UPDATE_PROFILE_FAIL:
             return defaultState;
         default:
@@ -63,7 +63,7 @@ export const ad = (state = defaultState.ad, action) => {
         case types.GET_AD_FAILURE:
             return action.error;
         case types.NEW_AD_SUCCESFULL:
-            return action.ad;
+            return defaultState.ad;
         case types.NEW_AD_FAILURE:
             return action.error;
         default:

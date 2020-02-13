@@ -43,7 +43,7 @@ const deleteUser = async (id) => {
 const updateUser = async (id, user) => {
     try {
         return await axios.put(`${API_URL}/register/${id}`, user).then(res => {
-            return res.data;
+            return res.data.result;
         });
     }catch (e) {
         console.log(e.message);
@@ -94,11 +94,9 @@ const filterAds = async (filters) => {
 
 const newAd = async (token, ad) => {
     try {
-        await axios.post(`${API_URL}/anuncios/`, ad,{
+        await axios.post(`${API_URL}/anuncios`, ad,{
             headers: { authorization: token },
-        }).then(() => {
-            return 'Anuncio guardado correctamente'
-        });
+        }).then(res => res.data.result);
     }catch (e) {
         console.log(e.message);
         throw new Error(e.message);

@@ -50,7 +50,7 @@ export default function Profile({ session, deleteUser, updateUser }) {
                 <div className="cardContend">
                     <Card className={classes.cardProfile}>
                         <CardContent>
-                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            <Typography className={classes.pos} color="textSecondary">
                                <b>Usuario:</b> {session.session.username}
                             </Typography>
                             <Typography className={classes.pos} color="textSecondary">

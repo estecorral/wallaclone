@@ -22,7 +22,6 @@ const rootProps = {
 
 store.subscribe(() => {
     const { session } = store.getState();
-    console.log(session);
     if(session.success) {
         saveUser(session);
     }

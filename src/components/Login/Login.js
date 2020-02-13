@@ -18,7 +18,6 @@ function Alert(props) {
 export default function Login({login, sessionUser}) {
     const { handleSubmit, errors, control } = useForm();
     const onSubmit = (data) => {
-        console.log('log user', data);
         login(data);
     };
 

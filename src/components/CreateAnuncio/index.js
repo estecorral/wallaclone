@@ -1,7 +1,7 @@
 import CreateAnuncio from "./CreteAnuncio";
 import {connect} from "react-redux";
 import {getSession} from "../../store/selectors";
-import {fetchNewAd} from "../../store/actions";
+import { fetchNewAd } from "../../store/actions";
 
 function mapStateToProps(state) {
     return {

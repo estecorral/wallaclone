@@ -56,7 +56,6 @@ export default function Register({regNewUser, regUser}) {
 
     return (
         <div className="Register">
-            {console.log(regUser)}
             <Card className="card" variant="outlined">
                     <CardContent className="card-content">
                         <Typography variant="h5" component="h2">

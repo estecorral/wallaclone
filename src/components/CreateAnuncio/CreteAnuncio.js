@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import ReactSelect from 'react-select';
 
 import './CreateAnuncio.css';
+import {Link} from "react-router-dom";
 
 const options = [
     { value: 'game', label: 'Juegos' },
@@ -21,8 +22,8 @@ const options = [
     { value: 'electro', label: 'Electrodomésticos' }
 ];
 const optionsVenta = [
-    { value: false, label: 'compra' },
     { value: true, label: 'venta' },
+    { value: false, label: 'compra' },
 ];
 
 export default function CreateAnuncio ({session, saveAd}) {
@@ -30,19 +31,17 @@ export default function CreateAnuncio ({session, saveAd}) {
     const [file, setFile] = useState({});
     const { handleSubmit, errors, control } = useForm();
     const onSubmit = (data) => {
-        console.log(data);
         let formData = new FormData();
         formData.append('foto', file);
         formData.append('token', session.session.token);
         formData.append('nombre', data.nombre);
         formData.append('descripcion', data.descripcion);
         formData.append('precio', data.precio);
+        formData.append('venta', data.venta.value);
         formData.append('autor', session.session.id);
-        const tagsArr = data.tags.map(tag => {
-            console.log(tag.value);
-            return tag.value;
+        data.tags.map(tag => {
+            formData.append('tags', tag.value);
         });
-        formData.append('tags', tagsArr);
         saveAd(session.session.token, formData);
     };
 
@@ -106,6 +105,9 @@ export default function CreateAnuncio ({session, saveAd}) {
                                     name="venta"
                                     as={<ReactSelect className="controller" placeholder="tipo"
                                                      options={optionsVenta}/>}
+                                    onChange={([selected]) => {
+                                        return { value: selected };
+                                    }}
                                     rules={{required: true}}
                                     control={control}
                                     defaultValue=""
@@ -113,7 +115,7 @@ export default function CreateAnuncio ({session, saveAd}) {
                                 {errors.venta && "Your input is required"}
                             </div>
                             <div className="buttons">
-                                <Button className={classes.buttonBlue2}>
+                                <Button component={Link} to="/" className={classes.buttonBlue2}>
                                     Cancelar
                                 </Button>
                                 <Button className={classes.buttonRed} type="submit">
