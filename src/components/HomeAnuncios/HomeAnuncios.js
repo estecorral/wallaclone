@@ -161,11 +161,11 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
                             </Snackbar>:
                             ads.map(ad => (
                                 <Card className={classes.card} key={ad._id}>
+                                    <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${ad.nombre}/${ad._id}`}>
                                     <CardMedia
                                         className={classes.cover}
                                         image={`http://localhost:3001/images/anuncios/${ad.foto}`}
                                     />
-                                    <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${ad.nombre}/${ad._id}`}>
                                         <div className={classes.details}>
                                             <CardContent className={classes.content}>
                                                 <Typography component="h5">{ad.nombre}</Typography>

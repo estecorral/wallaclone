@@ -6,3 +6,17 @@
     background-color: #e1f5fe;
     width: 100%;
 }
+.icondel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.typo {
+    display: flex;
+    flex-direction: column;
+}
+.anunciops {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

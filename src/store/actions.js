@@ -1,10 +1,12 @@
 import * as types from './types';
 import {
     setNewUser, getAds, getTags, filterAds,
-    getSession, getAd, deleteUser, updateUser, newAd
+    getSession, getAd, deleteUser, updateUser, newAd,
+    deleteAd
 } from "../Services/api";
 import { push } from 'connected-react-router';
 import { deleteStorage } from '../storage/storage';
+
 /**
     Gestión de registro de nuevo usuario
  **/
@@ -109,7 +111,7 @@ export const deleteUFail = (error) => ({
 export const fetchUpdateUser = (id, user) => {
     return async function (dispatch){
         try {
-            const session = await updateUser(id, user);
+            await updateUser(id, user);
             dispatch(updateUserSuccess());
         } catch (e) {
             dispatch(updateUserFailure(e));
@@ -200,6 +202,32 @@ export const fetchNewAd = (token, ad) => {
 
   }
 };
+
+/**
+ *  Delete ad
+ */
+export const fetchDeleteAd = (id, name, token) => {
+    return async function (dispatch) {
+        try {
+            await deleteAd(id, token);
+            dispatch(fetchAds());
+            dispatch(deleteAdSuccess());
+            dispatch(push('/'));
+        } catch (e) {
+            dispatch(deleteAdFail(e));
+        }
+    }
+};
+
+export const deleteAdSuccess = () => ({
+    type: types.DELETE_AD_SUCCESFULL,
+});
+
+export const deleteAdFail = (error) => ({
+    type: types.DELETE_AD_FAILURE,
+    error,
+});
+
 
 export const createNewAd = () => ({
     type: types.NEW_AD_SUCCESFULL,

@@ -112,6 +112,7 @@ const navStyles = makeStyles((theme: Theme) =>
         },
         cover: {
             width: '25%',
+            height: '100%',
         },
         avatar: {
             backgroundColor: red[500],

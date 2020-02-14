@@ -71,6 +71,19 @@ const getAd = async (id) => {
     }
 };
 
+const deleteAd = async (id, token) => {
+    try {
+        return await axios.delete(`${API_URL}/anuncios/delete/${id}`, {
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const filterAds = async (filters) => {
     try {
         if (filters.tag && !filters.venta && !filters.price && !filters.name) {
@@ -124,4 +137,5 @@ export {
     deleteUser,
     updateUser,
     newAd,
+    deleteAd,
 }
