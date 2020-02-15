@@ -170,7 +170,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                             </Snackbar>:
                             ads.map(ad => (
                                 <Card className={classes.card} key={ad._id}>
-                                    <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${ad.nombre}/${ad._id}`}>
+                                    <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${(ad.nombre.toLocaleLowerCase()).trim()}/${ad._id}`}>
                                     <CardMedia
                                         className={classes.cover}
                                         image={`http://localhost:3001/images/anuncios/${ad.foto}`}

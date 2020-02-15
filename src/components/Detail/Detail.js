@@ -10,6 +10,7 @@ import {EuroSymbolRounded, FavoriteOutlined} from "@material-ui/icons";
 import {navStyles} from "../ComponentStyles/buttonStyles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import { TwitterShareButton, TwitterIcon, FacebookShareButton, FacebookIcon } from 'react-share';
 
 import './detail.css';
 import Chip from "@material-ui/core/Chip";
@@ -76,6 +77,12 @@ export default function Detail({match, getAd, ad}) {
                                     style={{backgroundColor:'#84ffff'}}
                               />
                           </Button>
+                          <TwitterShareButton url={window.location} title={ad.nombre}>
+                                  <TwitterIcon/>
+                          </TwitterShareButton>
+                          <FacebookShareButton url={window.location} title={ad.nombre}>
+                              <FacebookIcon/>
+                          </FacebookShareButton>
                       </CardActions>
                   </Card> :
                       <div>Cargando</div>
