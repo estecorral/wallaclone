@@ -84,6 +84,20 @@ const deleteAd = async (id, token) => {
     }
 };
 
+const updateAd = async (id, ad, token) => {
+    console.log(ad);
+    try {
+        return await axios.put(`${API_URL}/anuncios/update/${id}`, ad, {
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.result;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const filterAds = async (filters) => {
     try {
         if (filters.tag && !filters.venta && !filters.price && !filters.name) {
@@ -138,4 +152,5 @@ export {
     updateUser,
     newAd,
     deleteAd,
+    updateAd,
 }

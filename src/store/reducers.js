@@ -67,8 +67,12 @@ export const ad = (state = defaultState.ad, action) => {
         case types.NEW_AD_FAILURE:
             return action.error;
         case types.DELETE_AD_SUCCESFULL:
-            return defaultState.ads;
+            return defaultState.ad;
         case types.DELETE_AD_FAILURE:
+            return defaultState;
+        case types.UPDATE_AD_SUCCESFULL:
+            return defaultState.ad;
+        case types.UPDATE_AD_FAILURE:
             return defaultState;
         default:
             return state;

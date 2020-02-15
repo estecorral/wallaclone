@@ -2,7 +2,7 @@ import * as types from './types';
 import {
     setNewUser, getAds, getTags, filterAds,
     getSession, getAd, deleteUser, updateUser, newAd,
-    deleteAd
+    deleteAd, updateAd
 } from "../Services/api";
 import { push } from 'connected-react-router';
 import { deleteStorage } from '../storage/storage';
@@ -207,17 +207,16 @@ export const fetchNewAd = (token, ad) => {
  *  Delete ad
  */
 export const fetchDeleteAd = (id, name, token) => {
-    return async function (dispatch) {
-        try {
-            await deleteAd(id, token);
-            dispatch(fetchAds());
-            dispatch(deleteAdSuccess());
-            dispatch(push('/'));
-        } catch (e) {
-            dispatch(deleteAdFail(e));
+        return async function (dispatch) {
+            try {
+                await deleteAd(id, token);
+                dispatch(deleteAdSuccess());
+                dispatch(push('/'));
+            } catch (e) {
+                dispatch(deleteAdFail(e));
+            }
         }
-    }
-};
+    };
 
 export const deleteAdSuccess = () => ({
     type: types.DELETE_AD_SUCCESFULL,
@@ -225,6 +224,30 @@ export const deleteAdSuccess = () => ({
 
 export const deleteAdFail = (error) => ({
     type: types.DELETE_AD_FAILURE,
+    error,
+});
+
+/**
+ *  Update ad
+ */
+export const fetchUpdateAd = (id, ad, token) => {
+    return async function (dispatch) {
+        try {
+            await updateAd(id, ad, token);
+            dispatch(updateAdSuccess());
+            dispatch(push('/'));
+        } catch (e) {
+            dispatch(updateAdFail(e));
+        }
+    }
+};
+
+export const updateAdSuccess = () => ({
+    type: types.UPDATE_AD_SUCCESFULL,
+});
+
+export const updateAdFail = (error) => ({
+    type: types.UPDATE_AD_FAILURE,
     error,
 });
 

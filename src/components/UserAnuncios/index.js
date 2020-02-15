@@ -1,7 +1,7 @@
 import UserAnuncios from "./UserAnuncios";
 import {connect} from "react-redux";
 import {getAllAdsUser, getSession} from "../../store/selectors";
-import { fetchAds, fetchDeleteAd } from "../../store/actions";
+import { fetchAds, fetchDeleteAd, fetchUpdateAd} from "../../store/actions";
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -14,6 +14,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         getAds: () => dispatch(fetchAds(), ownProps.push),
         deleteAd: (id, name, token) => dispatch(fetchDeleteAd(id, name, token), ownProps.push),
+        updateAd: (id, ad, token) => dispatch(fetchUpdateAd(id, ad, token)),
     };
 }
 
