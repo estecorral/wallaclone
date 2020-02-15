@@ -260,6 +260,15 @@ export const createNewAdFail = error => ({
     type: types.NEW_AD_FAILURE,
     error,
 });
+
+/**
+ *  Revierte el orden de los anuncios
+ */
+export const revertAds = (ads) => ({
+    type: types.REVERT_ADS,
+    ads,
+});
+
 /**
  *  Recoge los tags disponibles
  **/

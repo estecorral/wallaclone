@@ -11,7 +11,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Chip from "@material-ui/core/Chip";
-import {EuroSymbolRounded, DeleteForeverRounded, Edit} from "@material-ui/icons";
+import {EuroSymbolRounded, DeleteForeverRounded, Edit, SettingsBackupRestore} from "@material-ui/icons";
 import {navStyles} from "../ComponentStyles/buttonStyles";
 
 import './UserAnuncios.css';
@@ -39,7 +39,7 @@ const optionsVenta = [
     { value: false, label: 'compra' },
 ];
 
-export default function UserAnuncios({match, getAds, ads, session, deleteAd, updateAd}) {
+export default function UserAnuncios({match, getAds, ads, session, deleteAd, updateAd, revertAds}) {
 
     useEffect(() => {
         getAds();
@@ -88,11 +88,18 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
         } else return { value: false, label: 'compra' }
     };
 
+    const reverseList = () => {
+        revertAds(ads.reverse());
+    };
+
     return(
       <div className="UserAnuncios">
         <NavBar/>
         <div className="cards">
             <h3>Anuncios del usuario <b>{match.params.username}</b></h3>
+            <IconButton aria-label="cambiar orden" onClick={reverseList}>
+                <SettingsBackupRestore fontSize="large"/>
+            </IconButton>
                 {
                     ads.length === 0 ?
                         <Snackbar  open={ads.length === 0} autoHideDuration={6000}>

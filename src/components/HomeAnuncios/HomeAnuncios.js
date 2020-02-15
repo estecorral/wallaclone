@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {navStyles} from "../ComponentStyles/buttonStyles";
 import {SportsEsports, DriveEtaRounded, PhoneIphoneRounded, ComputerRounded, SportsBasketballRounded,
-    LocalLaundryServiceRounded, RemoveRedEyeRounded, EuroSymbolRounded } from "@material-ui/icons";
+    LocalLaundryServiceRounded, RemoveRedEyeRounded, EuroSymbolRounded,
+    SettingsBackupRestore} from "@material-ui/icons";
 import TextField from "@material-ui/core/TextField";
 import './HomeAnuncios.css'
 import {Controller, useForm} from "react-hook-form";
@@ -37,7 +38,7 @@ const optionsPrice = [
     { value: "5001-10000", label: "5001-10000" }
 ];
 
-export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
+export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) {
     const { handleSubmit, control } = useForm();
     const [tag, setTagState] = useState('');
     const [state, setState] = useState({
@@ -45,6 +46,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
             tipo: '',
             precios: '',
         });
+    const [adsRever, setAdsRevState] = useState(false);
 
     const classes = navStyles();
 
@@ -58,6 +60,10 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
         getAds();
     }, [getAds]);
 
+    const reverseList = () => {
+        setAdsRevState(!adsRever);
+        revertAds(ads.reverse());
+    };
 
     return(
         <React.Fragment>
@@ -151,6 +157,9 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads}) {
                     </div>
                 </div>
                 <div className="cardList">
+                    <IconButton aria-label="cambiar orden" onClick={reverseList}>
+                        <SettingsBackupRestore fontSize="large"/>
+                    </IconButton>
                     {
                         ads.length === 0 ?
                             <Snackbar  open={ads.length === 0} autoHideDuration={6000}>

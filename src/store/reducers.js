@@ -51,6 +51,8 @@ export const ads = (state = defaultState.ads, action) => {
             return action.ads;
         case types.GET_ADS_FAILURE:
             return action.error;
+        case types.REVERT_ADS:
+            return action.ads;
         default:
             return state;
     }
