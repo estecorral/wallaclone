@@ -145,7 +145,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                 </ButtonBase>
                                 {ad.autor.username === session.session.username &&(
                                     <div className="anunciops">
-                                        <IconButton aria-label="delete" className={classes.margin} onClick={()=> { handleClickOpenDelete(); setDialog(ad._id)}}>
+                                        <IconButton aria-label="delete" className={classes.margin} onClick={()=> { handleClickOpenDelete(); setDialog(ad)}}>
                                             <DeleteForeverRounded fontSize="large" />
                                         </IconButton>
                                         <IconButton aria-label="edit" className={classes.margin} onClick={() => {handleClickOpenEdit(); setDialog(ad)}}>
@@ -168,7 +168,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                             <Button onClick={handleClose} className={classes.buttonBlue2}>
                                                 Cancelar
                                             </Button>
-                                            <Button onClick={(e) => delAd(e, dialogState)} type="submit" className={classes.buttonRed}>
+                                            <Button onClick={(e) => delAd(e, dialogState._id)} type="submit" className={classes.buttonRed}>
                                                 Aceptar
                                             </Button>
                                         </DialogActions>
