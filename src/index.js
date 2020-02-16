@@ -22,9 +22,7 @@ const rootProps = {
 
 store.subscribe(() => {
     const { session } = store.getState();
-    if(session.success) {
-        saveUser(session);
-    }
+    saveUser(session);
 });
 
 ReactDOM.render(<Root {...rootProps}/>, document.getElementById('root'));

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Register from '../Register';
@@ -8,19 +8,12 @@ import Detail from "../Detail";
 import PrivateRoute from "../PrivateRoute";
 import Profile from "../Profile";
 import UserAnuncios from "../UserAnuncios";
-import { restoreUser } from '../../storage/storage';
 import CreateAnuncio from "../CreateAnuncio";
+import FavoritosList from "../FavoritosList";
 
 
-const App = ({ updateSession }) => {
-    const restSession = restoreUser();
-
-    useEffect(() => {
-        if (restSession) {
-            updateSession(restSession);
-        }
-    }, []);
-
+const App = ({ session, updateSession }) => {
+    updateSession(session.session);
     return (
         <Switch>
             <Route path="/register" exact component={Register} />
@@ -30,6 +23,7 @@ const App = ({ updateSession }) => {
             <Route path='/anuncios/:username' exact component={UserAnuncios} />
             <PrivateRoute path="/profile" exact component={Profile}/>
             <PrivateRoute path="/createanuncio" exact component={CreateAnuncio}/>
+            <PrivateRoute path="/favoritos" exact component={FavoritosList}/>
         </Switch>
 )};
 

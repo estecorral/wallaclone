@@ -1,11 +1,11 @@
 import App from "./App";
-import {getSession} from "../../store/selectors";
 import {connect} from "react-redux";
-import { getSessionSuccesfull } from "../../store/actions";
+import {getSessionSuccesfull} from "../../store/actions";
+
 
 function mapStateToProps(state) {
     return {
-        session: getSession(state),
+       // session: getSession(state),
     };
 }
 

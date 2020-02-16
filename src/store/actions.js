@@ -2,10 +2,10 @@ import * as types from './types';
 import {
     setNewUser, getAds, getTags, filterAds,
     getSession, getAd, deleteUser, updateUser, newAd,
-    deleteAd, updateAd
+    deleteAd, updateAd, favoriteAd, getFavs, delelteFav
 } from "../Services/api";
 import { push } from 'connected-react-router';
-import { deleteStorage } from '../storage/storage';
+import {deleteStorage, saveUser} from '../storage/storage';
 
 /**
     Gestión de registro de nuevo usuario
@@ -46,6 +46,7 @@ export const fetchSession = (user) => {
     return async function (dispatch) {
         try {
             const session = await getSession(user);
+            saveUser(session);
             dispatch(getSessionSuccesfull(session));
             if(session.success) {
                 dispatch(push('/'));
@@ -267,6 +268,79 @@ export const createNewAdFail = error => ({
 export const revertAds = (ads) => ({
     type: types.REVERT_ADS,
     ads,
+});
+
+/**
+ * Añade un anuncio a favoritos
+ */
+export const addFavorite = (id, ad, token) => {
+    return async function (dispatch) {
+        try {
+            const favs = await favoriteAd(id, ad, token);
+            dispatch(addFavoriteSuccesfull(favs));
+        } catch (e) {
+            dispatch(addFavoriteFailure(e));
+        }
+    }
+};
+
+export const addFavoriteSuccesfull = favs => ({
+    type: types.ADD_FAVORITE_SUCCESFULL,
+    favs,
+});
+
+export const addFavoriteFailure = error => ({
+    type: types.ADD_FAVORITE_FAILURE,
+    error,
+});
+
+/**
+ * Recupera los anuncios favoritos de un usuario
+ */
+export const getAllFavs = (id, token) => {
+    return async function (dispatch) {
+        try {
+            const favs = await getFavs(id, token);
+            dispatch(getFavoriteSuccesfull(favs));
+        } catch (e) {
+            dispatch(getFavoriteFailure(e));
+        }
+    }
+};
+
+export const getFavoriteSuccesfull = favs => ({
+    type: types.GET_FAVORITES_SUCCESFULL,
+    favs,
+});
+
+export const getFavoriteFailure = error => ({
+    type: types.GET_FAVORITES_FAILURE,
+    error,
+});
+
+/**
+ *  Delete de favoritos
+ */
+export const delFav = (id, ad, token) => {
+    return async function (dispatch) {
+        try {
+            const favs = await delelteFav(id, ad, token);
+            console.log(favs);
+            dispatch(delFavoriteSuccesfull(favs));
+        } catch (e) {
+            dispatch(delFavoriteFailure(e));
+        }
+    }
+};
+
+export const delFavoriteSuccesfull = favs => ({
+    type: types.DELETE_FAVORITE_SUCCESFULL,
+    favs,
+});
+
+export const delFavoriteFailure = error => ({
+    type: types.DELETE_FAVORITE_FAILURE,
+    error,
 });
 
 /**

@@ -16,13 +16,25 @@ import './detail.css';
 import Chip from "@material-ui/core/Chip";
 import {Link} from "react-router-dom";
 
-export default function Detail({match, getAd, ad}) {
+export default function Detail({match, getAd, ad, session, setFavorite, getFavs, getAllFavorites, deleteFavorite}) {
 
     const classes = navStyles();
-
     useEffect(() => {
+        if(session.success) {
+            getAllFavorites(session.session.id, session.session.token);
+        }
         getAd(match.params.id);
-    }, [getAd, match.params.id]);
+    }, [getAd, match.params.id, getAllFavorites]);
+
+    const newFav = (e) => {
+        e.preventDefault();
+        setFavorite(session.session.id, ad, session.session.token);
+    };
+
+    const delFav = (e) => {
+        e.preventDefault();
+        deleteFavorite(session.session.id, ad, session.session.token);
+    };
 
     return(
       <div className="detail">
@@ -46,9 +58,15 @@ export default function Detail({match, getAd, ad}) {
                           </Typography>
                       </CardContent>
                       <CardActions disableSpacing>
-                          <IconButton aria-label="add to favorites">
-                              <FavoriteOutlined />
-                          </IconButton>
+                          { session.success && session.session.username !== ad.autor.username && ( getFavs.length > 0 && getFavs.find
+                          (fav => fav._id === ad._id) ?
+                              <IconButton aria-label="add to favorites" onClick={(e) => delFav(e)}>
+                                <FavoriteOutlined style={{color: '#f44336'}}/>
+                              </IconButton> :
+                              <IconButton aria-label="add to favorites" onClick={(e) => newFav(e)}>
+                                  <FavoriteOutlined />
+                              </IconButton>
+                          )}
                           <Chip
                               icon={<EuroSymbolRounded />}
                               label={ad.precio}

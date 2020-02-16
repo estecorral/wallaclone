@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -44,7 +44,7 @@ export default function NavBar({session, logout}) {
                                 <MenuItem onClick={handleClose}  component={Link} to="/profile">Profile</MenuItem>
                                 <MenuItem onClick={handleClose} component={Link} to={`/anuncios/${session.session.username}`}>Mis anuncios</MenuItem>
                                 <MenuItem onClick={handleClose} component={Link} to="/createanuncio">Añadir nuevo anuncio</MenuItem>
-                                <MenuItem onClick={handleClose}>Mis favoritos</MenuItem>
+                                <MenuItem onClick={handleClose} component={Link} to="/favoritos">Mis favoritos</MenuItem>
                                 <MenuItem onClick={logout}>Logout</MenuItem>
                             </Menu>)
                         }

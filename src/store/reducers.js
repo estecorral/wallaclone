@@ -6,6 +6,7 @@ const defaultState = {
     ads: [],
     ad: {},
     tags: [],
+    favs: [],
     session: { success: false },
     ui: {
         loading: false,
@@ -75,7 +76,26 @@ export const ad = (state = defaultState.ad, action) => {
         case types.UPDATE_AD_SUCCESFULL:
             return defaultState.ad;
         case types.UPDATE_AD_FAILURE:
-            return defaultState;
+            return action.error;
+        default:
+            return state;
+    }
+};
+
+export const favs = (state = defaultState.favs, action) => {
+    switch (action.type) {
+        case types.GET_FAVORITES_SUCCESFULL:
+            return action.favs;
+        case types.GET_FAVORITES_FAILURE:
+            return action.error;
+        case types.ADD_FAVORITE_SUCCESFULL:
+            return action.favs;
+        case types.ADD_FAVORITE_FAILURE:
+            return action.error;
+        case types.DELETE_FAVORITE_SUCCESFULL:
+            return action.favs;
+        case types.DELETE_FAVORITE_FAILURE:
+            return action.error;
         default:
             return state;
     }
@@ -98,6 +118,7 @@ const reducer = combineReducers({
     tags,
     session,
     ad,
+    favs,
 });
 
 export default reducer;

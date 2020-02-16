@@ -130,6 +130,45 @@ const newAd = async (token, ad) => {
     }
 };
 
+const favoriteAd = async (id, ad, token) => {
+    try {
+        return await axios.put(`${API_URL}/register/favorite/${id}`, ad, {
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.favorites.favoritos;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const getFavs = async (id, token) => {
+    try {
+        return await axios.get(`${API_URL}/register/favorites/${id}`, {
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.favorites.favoritos;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const delelteFav = async (id, ad, token) => {
+    try {
+        return await axios.put(`${API_URL}/register/delete/${id}`, ad, {
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.favorites.favoritos;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const getTags = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios/tags`).then(res => {
@@ -153,4 +192,7 @@ export {
     newAd,
     deleteAd,
     updateAd,
+    favoriteAd,
+    getFavs,
+    delelteFav,
 }
