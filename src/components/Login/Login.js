@@ -79,6 +79,7 @@ export default function Login({login, sessionUser}) {
                             Login
                         </Button>
                     </form>
+                    <a href={'/resetpass'}>Recuperar contraseña</a>
                 </CardContent>
             </Card>
             {setAlerts(errors)}

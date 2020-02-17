@@ -51,6 +51,18 @@ const updateUser = async (id, user) => {
     }
 };
 
+const restetPass = async (email) => {
+    try {
+        return await axios.post(`${API_URL}/resetpass`, email).then(res => {
+            console.log(res.data);
+            return res.data.result;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+}
+
 const getAds = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios`).then(res => {
@@ -195,4 +207,5 @@ export {
     favoriteAd,
     getFavs,
     delelteFav,
+    restetPass,
 }

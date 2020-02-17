@@ -2,8 +2,8 @@ import * as types from './types';
 import {
     setNewUser, getAds, getTags, filterAds,
     getSession, getAd, deleteUser, updateUser, newAd,
-    deleteAd, updateAd, favoriteAd, getFavs, delelteFav
-} from "../Services/api";
+    deleteAd, updateAd, favoriteAd, getFavs, delelteFav,
+    restetPass } from "../Services/api";
 import { push } from 'connected-react-router';
 import {deleteStorage, saveUser} from '../storage/storage';
 
@@ -126,6 +126,29 @@ export const updateUserSuccess = () => ({
 
 export const updateUserFailure = (e) => ({
     type: types.UPDATE_PROFILE_FAIL,
+    e,
+});
+
+/**
+ *  Reset de contraseña de usuario
+ */
+export const fetchResetPass = (email) => {
+    return async function (dispatch) {
+        try {
+            await restetPass(email);
+            dispatch(resetPassSuccess());
+        }catch (e) {
+            dispatch(resetPassFail(e));
+        }
+    }
+};
+
+export const resetPassSuccess = () => ({
+    type: types.RESET_PASS_SUCCESS,
+});
+
+export const resetPassFail = (e) => ({
+    type: types.RESET_PASS_FAILURE,
     e,
 });
 

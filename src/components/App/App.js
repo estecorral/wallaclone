@@ -10,6 +10,7 @@ import Profile from "../Profile";
 import UserAnuncios from "../UserAnuncios";
 import CreateAnuncio from "../CreateAnuncio";
 import FavoritosList from "../FavoritosList";
+import ResetPassword from "../ResetPassword";
 
 
 const App = ({ session, updateSession }) => {
@@ -21,6 +22,7 @@ const App = ({ session, updateSession }) => {
             <Route path='/' exact component={HomeAnuncios}/>
             <Route path='/detail/:name/:id' exact component={Detail}/>
             <Route path='/anuncios/:username' exact component={UserAnuncios} />
+            <Route path='/resetpass' exact component={ResetPassword} />
             <PrivateRoute path="/profile" exact component={Profile}/>
             <PrivateRoute path="/createanuncio" exact component={CreateAnuncio}/>
             <PrivateRoute path="/favoritos" exact component={FavoritosList}/>
