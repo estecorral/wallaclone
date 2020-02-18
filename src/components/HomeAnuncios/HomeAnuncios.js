@@ -22,6 +22,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import AlertTitle from "@material-ui/lab/AlertTitle";
 
 import NavBar from "../NavBar";
+import Pagination from "@material-ui/lab/Pagination";
 
 const optionsType = [
     { value: "", label: "Compra/venta"},
@@ -46,7 +47,10 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
             tipo: '',
             precios: '',
         });
+    const [page, setPage] = useState(1);
     const [adsRever, setAdsRevState] = useState(false);
+
+    const [pagination, setPagination] = useState({inicio: 0, fin: 5});
 
     const classes = navStyles();
 
@@ -63,6 +67,16 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
     const reverseList = () => {
         setAdsRevState(!adsRever);
         revertAds(ads.reverse());
+    };
+
+    const changePage = (event, value) => {
+        if (page <= value) {
+            setPagination({inicio: pagination.inicio + 5, fin: pagination.fin + 5 });
+        } else {
+            setPagination({inicio: pagination.inicio - 5, fin: pagination.fin - 5 });
+        }
+        setPage(value);
+        console.log(value, pagination);
     };
 
     return(
@@ -157,6 +171,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                     </div>
                 </div>
                 <div className="cardList">
+                    <Typography>Page: {page}</Typography>
                     <IconButton aria-label="cambiar orden" onClick={reverseList}>
                         <SettingsBackupRestore fontSize="large"/>
                     </IconButton>
@@ -168,7 +183,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                                     No se han encontrado anuncios
                                 </Alert>
                             </Snackbar>:
-                            ads.map(ad => (
+                            ads.slice(pagination.inicio, pagination.fin).map(ad => (
                                 <Card className={classes.card} key={ad._id}>
                                     <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${(ad.nombre.toLocaleLowerCase()).trim()}/${ad._id}`}>
                                     <CardMedia
@@ -204,6 +219,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                                 </Card>
                         ))
                     }
+                    <Pagination count={Math.ceil(ads.length/5)} page={page} onChange={changePage} color="primary" className="paginator"/>
                 </div>
             </div>
         </React.Fragment>

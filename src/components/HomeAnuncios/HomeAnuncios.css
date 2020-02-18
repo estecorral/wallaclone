@@ -37,3 +37,6 @@
 .controller {
     width: 32%;
 }
+.paginator {
+    margin-top: 20px;
+}

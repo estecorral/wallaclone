@@ -3,7 +3,7 @@ import {
     setNewUser, getAds, getTags, filterAds,
     getSession, getAd, deleteUser, updateUser, newAd,
     deleteAd, updateAd, favoriteAd, getFavs, delelteFav,
-    restetPass } from "../Services/api";
+    restetPass, setNewPass } from "../Services/api";
 import { push } from 'connected-react-router';
 import {deleteStorage, saveUser} from '../storage/storage';
 
@@ -151,6 +151,21 @@ export const resetPassFail = (e) => ({
     type: types.RESET_PASS_FAILURE,
     e,
 });
+
+/**
+ * Establece la nueva contraseña de usuario
+ */
+export const fetchResetNewPass = (pass, email, token) => {
+    return async function (dispatch) {
+        try {
+            await setNewPass(pass, email, token);
+            dispatch(resetPassSuccess());
+            dispatch(push('/login'));
+        }catch (e) {
+            dispatch(resetPassFail(e));
+        }
+    }
+};
 
 /**
  Gestión recuperar los anuncios

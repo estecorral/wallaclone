@@ -54,6 +54,19 @@ const updateUser = async (id, user) => {
 const restetPass = async (email) => {
     try {
         return await axios.post(`${API_URL}/resetpass`, email).then(res => {
+            return res.data.result;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const setNewPass = async (pass, email, token) => {
+    try {
+        return await axios.put(`${API_URL}/reset/${token}`, {password: pass, email: email}, {
+            headers: { authorization: token },
+        }).then(res => {
             console.log(res.data);
             return res.data.result;
         });
@@ -61,7 +74,7 @@ const restetPass = async (email) => {
         console.log(e.message);
         throw new Error(e.message);
     }
-}
+};
 
 const getAds = async () => {
     try {
@@ -208,4 +221,5 @@ export {
     getFavs,
     delelteFav,
     restetPass,
+    setNewPass,
 }

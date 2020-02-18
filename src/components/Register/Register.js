@@ -33,21 +33,21 @@ export default function Register({regNewUser, regUser}) {
                     </Alert>
                 </Snackbar>
             );
+        } else if (err.email) {
+            openError = true;
+            return (
+                <Snackbar open={openError} autoHideDuration={6000}>
+                    <Alert severity="error">
+                        Campo email requerido, o formato incorrecto
+                    </Alert>
+                </Snackbar>
+            );
         } else if (err.password) {
             openError = true;
             return (
                 <Snackbar open={openError} autoHideDuration={6000}>
                     <Alert severity="error">
                         Campo password requerido
-                    </Alert>
-                </Snackbar>
-            );
-        } else if (err.email) {
-            openError = true;
-            return (
-                <Snackbar open={openError} autoHideDuration={6000}>
-                    <Alert severity="error">
-                        Campo email requerido
                     </Alert>
                 </Snackbar>
             );
@@ -78,7 +78,7 @@ export default function Register({regNewUser, regUser}) {
                                 name="email"
                                 as={<TextField label="email" className="input"/>}
                                 control={control}
-                                rules={{required: true}}
+                                rules={{required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,}}
                                 defaultValue=""
                             />
                             {errors.email &&

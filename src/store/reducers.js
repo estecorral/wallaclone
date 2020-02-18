@@ -8,6 +8,7 @@ const defaultState = {
     tags: [],
     favs: [],
     session: { success: false },
+    response: {},
     ui: {
         loading: false,
         error: null,
@@ -38,7 +39,7 @@ export const session = (state = defaultState.session, action) => {
         case types.DELETE_PROFILE_FAIL:
             return action.error;
         case types.UPDATE_PROFILE_SUCCESS:
-            return defaultState.session;
+            return action.response;
         case types.UPDATE_PROFILE_FAIL:
             return defaultState;
         default:
