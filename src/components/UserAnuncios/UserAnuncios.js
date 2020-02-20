@@ -25,6 +25,7 @@ import Dialog from "@material-ui/core/Dialog";
 import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import ReactSelect from "react-select";
+import Pagination from "@material-ui/lab/Pagination";
 
 const options = [
     { value: 'game', label: 'Juegos' },
@@ -49,6 +50,17 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
     const [dialogState, setDialog] = useState();
+    const [page, setPage] = useState(1);
+    const [pagination, setPagination] = useState({inicio: 0, fin: 5});
+
+    const changePage = (event, value) => {
+        if (page <= value) {
+            setPagination({inicio: pagination.inicio + 5, fin: pagination.fin + 5 });
+        } else {
+            setPagination({inicio: pagination.inicio - 5, fin: pagination.fin - 5 });
+        }
+        setPage(value);
+    };
 
     const onSubmit = (data) => {
         updateAd(dialogState._id, data, session.session.token);
@@ -56,7 +68,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
 
     const classes = navStyles();
 
-    const handleClickOpenDelete = (e) => {
+    const handleClickOpenDelete = () => {
         setOpen(true);
     };
 
@@ -71,7 +83,6 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
 
     const delAd = (e, id) => {
         e.preventDefault();
-        console.log('se borra', id);
         deleteAd(id, session.session.username, session.session.token);
     };
 
@@ -108,7 +119,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                 No se han encontrado anuncios
                             </Alert>
                         </Snackbar>:
-                        ads.map(ad => (
+                        ads.slice(pagination.inicio, pagination.fin).map(ad => (
                             <Card className={classes.card} key={ad._id}>
                                 <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${ad.nombre}/${ad._id}`}>
                                 <CardMedia
@@ -258,6 +269,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                             </Card>
                         ))
                 }
+            <Pagination count={Math.ceil(ads.length/5)} page={page} onChange={changePage} color="primary" className="paginator"/>
         </div>
       </div>
     );

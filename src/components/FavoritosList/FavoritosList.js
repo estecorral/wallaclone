@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import ButtonBase from "@material-ui/core/ButtonBase";
 import {Link} from "react-router-dom";
@@ -14,10 +14,23 @@ import {navStyles} from "../ComponentStyles/buttonStyles";
 import NavBar from "../NavBar";
 
 import './FavoritosList.css';
+import Pagination from "@material-ui/lab/Pagination";
 
 export default function FavoritosList({favorites, getAllFavorites, session}) {
 
     const classes = navStyles();
+
+    const [page, setPage] = useState(1);
+    const [pagination, setPagination] = useState({inicio: 0, fin: 5});
+
+    const changePage = (event, value) => {
+        if (page <= value) {
+            setPagination({inicio: pagination.inicio + 5, fin: pagination.fin + 5 });
+        } else {
+            setPagination({inicio: pagination.inicio - 5, fin: pagination.fin - 5 });
+        }
+        setPage(value);
+    };
 
     useEffect(() => {
         getAllFavorites(session.session.id, session.session.token);
@@ -28,7 +41,7 @@ export default function FavoritosList({favorites, getAllFavorites, session}) {
             <NavBar/>
             <div className="favoritosCenter">
                 <h3>Mis anuncios favoritos</h3>
-                {favorites.map(fav => (
+                {favorites.slice(pagination.inicio, pagination.fin).map(fav => (
                     <Card className={classes.card} key={fav._id}>
                         <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${fav.nombre}/${fav._id}`}>
                             <CardMedia
@@ -65,6 +78,7 @@ export default function FavoritosList({favorites, getAllFavorites, session}) {
                         </ButtonBase>
                     </Card>
                 ))}
+                <Pagination count={Math.ceil(favorites.length/5)} page={page} onChange={changePage} color="primary" className="paginator"/>
             </div>
         </div>
     );

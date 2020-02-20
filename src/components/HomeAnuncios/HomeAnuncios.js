@@ -76,7 +76,6 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
             setPagination({inicio: pagination.inicio - 5, fin: pagination.fin - 5 });
         }
         setPage(value);
-        console.log(value, pagination);
     };
 
     return(
