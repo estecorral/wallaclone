@@ -50,7 +50,20 @@ export default function Detail({match, getAd, ad, session, setFavorite, getFavs,
                           }
                           title={ad.nombre}
                           subheader={ad.date}
+
                       />
+                          {ad.reservado && (
+                              <Chip className={classes.reservado}
+                                    label="Reservado"
+                                    style={{backgroundColor:'#ce93d8'}}
+                              />
+                          )}
+                          {ad.vendido && (
+                              <Chip className={classes.reservado}
+                                    label="Vendido"
+                                    style={{backgroundColor:'#f44336', color: 'white'}}
+                              />
+                          )}
                           <img className="media" src={`http://localhost:3001/images/anuncios/${ad.foto}`} alt=""/>
                       <CardContent>
                           <Typography className="cardDescription" variant="body2" color="textSecondary" component="p">

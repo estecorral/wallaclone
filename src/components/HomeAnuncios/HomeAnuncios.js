@@ -212,6 +212,18 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                                                           color="primary"
                                                           variant="outlined"
                                                     />}
+                                                {ad.reservado && (
+                                                    <Chip className={classes.reservado}
+                                                          label="Reservado"
+                                                          style={{backgroundColor:'#ce93d8'}}
+                                                    />
+                                                )}
+                                                {ad.vendido && (
+                                                    <Chip className={classes.reservado}
+                                                          label="Vendido"
+                                                          style={{backgroundColor:'#f44336', color: 'white'}}
+                                                    />
+                                                )}
                                             </CardActions>
                                         </div>
                                     </ButtonBase>

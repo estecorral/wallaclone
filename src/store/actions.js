@@ -3,7 +3,8 @@ import {
     setNewUser, getAds, getTags, filterAds,
     getSession, getAd, deleteUser, updateUser, newAd,
     deleteAd, updateAd, favoriteAd, getFavs, delelteFav,
-    restetPass, setNewPass } from "../Services/api";
+    restetPass, setNewPass, stateVendido, stateReservado
+} from "../Services/api";
 import { push } from 'connected-react-router';
 import {deleteStorage, saveUser} from '../storage/storage';
 
@@ -297,6 +298,54 @@ export const createNewAd = () => ({
 
 export const createNewAdFail = error => ({
     type: types.NEW_AD_FAILURE,
+    error,
+});
+
+/**
+ * Marca anuncio como vendido
+ */
+export const setVendido = (id, val, token) => {
+    return async function (dispatch) {
+        try {
+            const ads = await stateVendido(id, val, token);
+            dispatch(vendidoSuccess(ads));
+        } catch (e) {
+            dispatch(vendidoFailed(e));
+        }
+    }
+};
+
+export const vendidoSuccess = (ads) => ({
+    type: types.VENDIDO_SUCCESFULL,
+    ads,
+});
+
+export const vendidoFailed = error => ({
+    type: types.VENDIDO_FAILURE,
+    error,
+});
+
+/**
+ * Marca anuncio como reservado
+ */
+export const setReservado = (id, val, token) => {
+    return async function (dispatch) {
+        try {
+            const ads = await stateReservado(id, val, token);
+            dispatch(reservadoSuccess(ads));
+        } catch (e) {
+            dispatch(reservadoFailed(e));
+        }
+    }
+};
+
+export const reservadoSuccess = (ads) => ({
+    type: types.RESERVADO_SUCCESFULL,
+    ads,
+});
+
+export const reservadoFailed = error => ({
+    type: types.RESERVADO_FAILURE,
     error,
 });
 

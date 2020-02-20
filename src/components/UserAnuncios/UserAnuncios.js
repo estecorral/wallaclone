@@ -11,7 +11,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Chip from "@material-ui/core/Chip";
-import {EuroSymbolRounded, DeleteForeverRounded, Edit, SettingsBackupRestore} from "@material-ui/icons";
+import {EuroSymbolRounded, DeleteForeverRounded, Edit, SettingsBackupRestore,
+    RemoveShoppingCartRounded, ShopTwoRounded} from "@material-ui/icons";
 import {navStyles} from "../ComponentStyles/buttonStyles";
 
 import './UserAnuncios.css';
@@ -26,6 +27,7 @@ import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import ReactSelect from "react-select";
 import Pagination from "@material-ui/lab/Pagination";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const options = [
     { value: 'game', label: 'Juegos' },
@@ -40,7 +42,8 @@ const optionsVenta = [
     { value: false, label: 'compra' },
 ];
 
-export default function UserAnuncios({match, getAds, ads, session, deleteAd, updateAd, revertAds}) {
+export default function UserAnuncios({match, getAds, ads, session, deleteAd, updateAd, revertAds,
+                                         setVendido, setReservado}) {
 
     useEffect(() => {
         getAds();
@@ -103,6 +106,17 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
         revertAds(ads.reverse());
     };
 
+    const vendido = (e, id, val) => {
+        e.preventDefault();
+        setVendido(id, val, session.session.token);
+    };
+
+    const reservado = (e, id, val) => {
+        e.preventDefault();
+        setReservado(id, val, session.session.token);
+        getAds();
+    };
+
     return(
       <div className="UserAnuncios">
         <NavBar/>
@@ -121,7 +135,8 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                         </Snackbar>:
                         ads.slice(pagination.inicio, pagination.fin).map(ad => (
                             <Card className={classes.card} key={ad._id}>
-                                <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${ad.nombre}/${ad._id}`}>
+                                <ButtonBase className={classes.buttonCard} component={Link}
+                                            to={`/detail/${ad.nombre}/${ad._id}`}>
                                 <CardMedia
                                     className={classes.cover}
                                     image={`http://localhost:3001/images/anuncios/${ad.foto}`}
@@ -156,12 +171,54 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                 </ButtonBase>
                                 {ad.autor.username === session.session.username &&(
                                     <div className="anunciops">
-                                        <IconButton aria-label="delete" className={classes.margin} onClick={()=> { handleClickOpenDelete(); setDialog(ad)}}>
-                                            <DeleteForeverRounded fontSize="large" />
-                                        </IconButton>
-                                        <IconButton aria-label="edit" className={classes.margin} onClick={() => {handleClickOpenEdit(); setDialog(ad)}}>
-                                            <Edit fontSize="large" />
-                                        </IconButton>
+                                        <Tooltip title="Delete">
+                                            <IconButton aria-label="delete" className={classes.margin}
+                                                        onClick={()=> { handleClickOpenDelete(); setDialog(ad)}}>
+                                                <DeleteForeverRounded  />
+                                            </IconButton>
+                                        </Tooltip>
+                                        <Tooltip title="editar">
+                                            <IconButton aria-label="edit" className={classes.margin}
+                                                        onClick={() => {handleClickOpenEdit(); setDialog(ad)}}>
+                                                <Edit  />
+                                            </IconButton>
+                                        </Tooltip>
+                                            {ad.vendido && (
+                                                <Tooltip title="Vendido">
+                                                    <IconButton aria-label="vendido" className={classes.margin}
+                                                                onClick={(e) =>
+                                                                    vendido(e, ad._id, false)} style={{color: '#f44336'}}>
+                                                        <RemoveShoppingCartRounded />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
+                                            {!ad.vendido && (
+                                                <Tooltip title="Vendido">
+                                                    <IconButton aria-label="vendido" className={classes.margin}
+                                                                onClick={(e) =>
+                                                                    vendido(e, ad._id, true)}>
+                                                        <RemoveShoppingCartRounded />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
+                                            {ad.reservado && (
+                                                <Tooltip title="Reservado">
+                                                    <IconButton aria-label="reservado" className={classes.margin}
+                                                                onClick={(e) =>
+                                                                    reservado(e, ad._id, false)} style={{color: '#03a9f4'}}>
+                                                        <ShopTwoRounded/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
+                                            {!ad.reservado && (
+                                                <Tooltip title="Reservado">
+                                                    <IconButton aria-label="reservado" className={classes.margin}
+                                                                onClick={(e) =>
+                                                                    reservado(e, ad._id, true)}>
+                                                        <ShopTwoRounded/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
                                         <Dialog
                                         open={open}
                                         onClose={handleClose}
@@ -171,7 +228,8 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                         <DialogTitle id="alert-dialog-title">{"Atención"}</DialogTitle>
                                         <DialogContent>
                                             <DialogContentText id="alert-dialog-description">
-                                                Si acepta, se procedera a eliminar el anuncio y toda la información relativa a este.
+                                                Si acepta, se procedera a eliminar el anuncio y toda la información
+                                                relativa a este.
                                                 ¿Está seguro que desea eliminar el anuncio?
                                             </DialogContentText>
                                         </DialogContent>
@@ -179,7 +237,8 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                             <Button onClick={handleClose} className={classes.buttonBlue2}>
                                                 Cancelar
                                             </Button>
-                                            <Button onClick={(e) => delAd(e, dialogState._id)} type="submit" className={classes.buttonRed}>
+                                            <Button onClick={(e) => delAd(e, dialogState._id)}
+                                                    type="submit" className={classes.buttonRed}>
                                                 Aceptar
                                             </Button>
                                         </DialogActions>
@@ -190,7 +249,9 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                             id={ad._id}
                                             aria-labelledby="alert-dialog-title"
                                             aria-describedby="alert-dialog-description">
-                                            <DialogTitle id="alert-dialog-title">{"Modifique los datos del anuncio que desee"}</DialogTitle>
+                                            <DialogTitle id="alert-dialog-title">
+                                                {"Modifique los datos del anuncio que desee"}
+                                            </DialogTitle>
                                             <DialogContent>
                                                 <DialogContentText id="alert-dialog-description">
 

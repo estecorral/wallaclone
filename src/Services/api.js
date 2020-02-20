@@ -110,7 +110,6 @@ const deleteAd = async (id, token) => {
 };
 
 const updateAd = async (id, ad, token) => {
-    console.log(ad);
     try {
         return await axios.put(`${API_URL}/anuncios/update/${id}`, ad, {
             headers: { authorization: token },
@@ -194,6 +193,32 @@ const delelteFav = async (id, ad, token) => {
     }
 };
 
+const stateVendido = async (id, vendido, token) => {
+    try {
+        return await axios.put(`${API_URL}/anuncios/update/vendido/${id}`, {vendido: vendido},{
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.ads;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
+const stateReservado = async (id, reservado,token) => {
+    try {
+        return await axios.put(`${API_URL}/anuncios/update/reservado/${id}`, {reservado: reservado},{
+            headers: { authorization: token },
+        }).then(res => {
+            return res.data.ads;
+        });
+    }catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+    }
+};
+
 const getTags = async () => {
     try {
         return await axios.get(`${API_URL}/anuncios/tags`).then(res => {
@@ -222,4 +247,6 @@ export {
     delelteFav,
     restetPass,
     setNewPass,
+    stateVendido,
+    stateReservado,
 }

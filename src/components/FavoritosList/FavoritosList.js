@@ -73,6 +73,18 @@ export default function FavoritosList({favorites, getAllFavorites, session}) {
                                               color="primary"
                                               variant="outlined"
                                         />}
+                                    {fav.reservado &&(
+                                        <Chip className={classes.reservado}
+                                              label="Reservado"
+                                              style={{backgroundColor:'#ce93d8'}}
+                                        />
+                                    )}
+                                    {fav.vendido && (
+                                        <Chip className={classes.reservado}
+                                              label="Vendido"
+                                              style={{backgroundColor:'#f44336', color: 'white'}}
+                                        />
+                                    )}
                                 </CardActions>
                             </div>
                         </ButtonBase>

@@ -55,6 +55,14 @@ export const ads = (state = defaultState.ads, action) => {
             return action.error;
         case types.REVERT_ADS:
             return action.ads;
+        case types.VENDIDO_SUCCESFULL:
+            return action.ads;
+        case types.VENDIDO_FAILURE:
+            return action.error;
+        case types.RESERVADO_SUCCESFULL:
+            return action.ads;
+        case types.RESERVADO_FAILURE:
+            return action.error;
         default:
             return state;
     }
@@ -74,10 +82,6 @@ export const ad = (state = defaultState.ad, action) => {
             return defaultState.ad;
         case types.DELETE_AD_FAILURE:
             return defaultState;
-        case types.UPDATE_AD_SUCCESFULL:
-            return defaultState.ad;
-        case types.UPDATE_AD_FAILURE:
-            return action.error;
         default:
             return state;
     }
