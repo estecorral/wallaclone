@@ -7,9 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import {Controller, useForm} from 'react-hook-form'
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from '@material-ui/lab/Alert';
-import { buttonStyles } from "../ComponentStyles/buttonStyles";
+import {navStyles} from "../ComponentStyles/buttonStyles";
 import './Register.css';
-
+import {Link} from "react-router-dom";
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -20,7 +20,7 @@ export default function Register({regNewUser, regUser}) {
         regNewUser(data);
     };
 
-    const classes = buttonStyles();
+    const classes = navStyles();
 
     const setAlerts = (err) => {
         let openError = false;
@@ -78,7 +78,7 @@ export default function Register({regNewUser, regUser}) {
                                 name="email"
                                 as={<TextField label="email" className="input"/>}
                                 control={control}
-                                rules={{required: true, pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,}}
+                                rules={{required: true, pattern: /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,}}
                                 defaultValue=""
                             />
                             {errors.email &&
@@ -92,8 +92,11 @@ export default function Register({regNewUser, regUser}) {
                             />
                             {errors.password &&
                             errors.password.type === "required"}
-                            <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
+                            <Button variant="contained" color="primary" className={classes.buttonBlue3} type="submit">
                                 Registrarse
+                            </Button>
+                            <Button variant="contained" color="primary" className={classes.buttonRed2} component={Link} to={`/`}>
+                                Cancelar
                             </Button>
                         </form>
                     </CardContent>

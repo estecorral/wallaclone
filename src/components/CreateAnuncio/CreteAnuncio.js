@@ -39,7 +39,7 @@ export default function CreateAnuncio ({session, saveAd}) {
         formData.append('precio', data.precio);
         formData.append('venta', data.venta.value);
         formData.append('autor', session.session.id);
-        data.tags.map(tag => {
+        data.tags.forEach(tag => {
             formData.append('tags', tag.value);
         });
         saveAd(session.session.token, formData);
@@ -74,6 +74,15 @@ export default function CreateAnuncio ({session, saveAd}) {
                                 />
                                 {errors.nombre && "Your input is required"}
                                 <Controller
+                                    name="tags"
+                                    as={<ReactSelect className="controller" placeholder="Tags"
+                                                     options={options} isMulti/>}
+                                    rules={{required: true}}
+                                    control={control}
+                                    defaultValue=""
+                                />
+                                {errors.tags && "Your input is required"}
+                                <Controller
                                     name="descripcion"
                                     as={<TextField variant="outlined" className="controller" multiline
                                                    rows="4" placeholder="descripción"/>}
@@ -92,15 +101,6 @@ export default function CreateAnuncio ({session, saveAd}) {
                                 {errors.precio && "Your input is required"}
                                 <input name="foto" type="file"  className="controller" onChange={getFile} placeholder="foto"/>
                                 {errors.foto && "Your input is required"}
-                                <Controller
-                                    name="tags"
-                                    as={<ReactSelect className="controller" placeholder="Tags"
-                                    options={options} isMulti/>}
-                                    rules={{required: true}}
-                                    control={control}
-                                    defaultValue=""
-                                />
-                                {errors.tags && "Your input is required"}
                                 <Controller
                                     name="venta"
                                     as={<ReactSelect className="controller" placeholder="tipo"

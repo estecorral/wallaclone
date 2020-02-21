@@ -6,7 +6,6 @@ import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {navStyles} from "../ComponentStyles/buttonStyles";
-import {Link} from "react-router-dom";
 
 import './ResetPage.css';
 

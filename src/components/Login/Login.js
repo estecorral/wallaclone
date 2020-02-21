@@ -6,10 +6,11 @@ import {Controller, useForm} from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import {buttonStyles} from "../ComponentStyles/buttonStyles";
+import {navStyles} from "../ComponentStyles/buttonStyles";
 import MuiAlert from "@material-ui/lab/Alert";
 
 import './Login.css';
+import {Link} from "react-router-dom";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -21,7 +22,7 @@ export default function Login({login, sessionUser}) {
         login(data);
     };
 
-    const classes = buttonStyles();
+    const classes = navStyles();
 
     const setAlerts = (err) => {
         let openError = false;
@@ -75,8 +76,11 @@ export default function Login({login, sessionUser}) {
                         />
                         {errors.password &&
                         errors.password.type === "required"}
-                        <Button variant="contained" color="primary" className={classes.buttonBlue} type="submit">
+                        <Button variant="contained" color="primary" className={classes.buttonBlue3} type="submit">
                             Login
+                        </Button>
+                        <Button variant="contained" color="primary" className={classes.buttonRed2} component={Link} to={`/`}>
+                            Cancelar
                         </Button>
                     </form>
                     <a href={'/resetpass'}>Recuperar contraseña</a>

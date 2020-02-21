@@ -13,7 +13,6 @@ import FavoritosList from "../FavoritosList";
 import ResetPassword from "../ResetPassword";
 import ResetPage from "../ResetPage";
 
-
 const App = ({ session, updateSession }) => {
     updateSession(session.session);
     return (

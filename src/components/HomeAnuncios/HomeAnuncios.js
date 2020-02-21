@@ -23,6 +23,7 @@ import AlertTitle from "@material-ui/lab/AlertTitle";
 
 import NavBar from "../NavBar";
 import Pagination from "@material-ui/lab/Pagination";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const optionsType = [
     { value: "", label: "Compra/venta"},
@@ -31,7 +32,7 @@ const optionsType = [
 ];
 
 const optionsPrice = [
-    { value: "", label: "" },
+    { value: "", label: "Rango precios" },
     { value: "1-100", label: "1-100" },
     { value: "101-500", label: "101-500" },
     { value: "501-2000", label: "501-2000" },
@@ -90,48 +91,62 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                         <Typography variant="h6" color="textSecondary">Selecciona una categoria</Typography>
                     </div>
                     <div className="iconsearch">
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( ''); getAds({tag: 'all', ...state})}}>
-                            { tag === '' ?
-                                <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }} /> :
-                                <RemoveRedEyeRounded fontSize="large"/>
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'game'); getAds({tag: 'game', ...state})}}>
-                            {tag === 'game' ?
-                                <SportsEsports fontSize="large" style={{color: '#03a9f4'}}/> :
-                                < SportsEsports fontSize = "large" />
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'motor'); getAds({tag: 'motor', ...state})}}>
-                            {tag === 'motor' ?
-                                <DriveEtaRounded fontSize="large" style={{color: '#03a9f4'}}/> :
-                                <DriveEtaRounded fontSize="large"/>
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'mobile'); getAds({tag: 'mobile', ...state})}}>
-                            {tag === 'mobile' ?
-                                <PhoneIphoneRounded fontSize="large" style={{color: '#03a9f4'}}/> :
-                                <PhoneIphoneRounded fontSize="large"/>
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'pc'); getAds({tag: 'pc', ...state})}}>
-                            {tag === 'pc' ?
-                                <ComputerRounded fontSize="large" style={{color: '#03a9f4'}}/> :
-                                <ComputerRounded fontSize="large"/>
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'sports'); getAds({tag: 'sports', ...state})}}>
-                            {tag === 'sports' ?
-                                <SportsBasketballRounded fontSize="large" style={{color: '#03a9f4'}}/> :
-                                <SportsBasketballRounded fontSize="large"/>
-                            }
-                        </IconButton>
-                        <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( 'electro'); getAds({tag: 'electro', ...state})}}>
-                            {tag === 'electro' ?
-                                <LocalLaundryServiceRounded fontSize="large" style={{color: '#03a9f4'}}/> :
-                                <LocalLaundryServiceRounded fontSize="large"/>
-                            }
-                        </IconButton>
+                        <Tooltip title="Todas las categorias" arrow>
+                            <IconButton aria-label="todos los anuncios" onClick={() => { setTagState( ''); getAds({tag: 'all', ...state})}}>
+                                { tag === '' ?
+                                    <RemoveRedEyeRounded fontSize="large" style={{color: '#03a9f4' }} /> :
+                                    <RemoveRedEyeRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Juegos" arrow>
+                            <IconButton aria-label="game" onClick={() => { setTagState( 'game'); getAds({tag: 'game', ...state})}}>
+                                {tag === 'game' ?
+                                    <SportsEsports fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    < SportsEsports fontSize = "large" />
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Motor" arrow>
+                            <IconButton aria-label="motor" onClick={() => { setTagState( 'motor'); getAds({tag: 'motor', ...state})}}>
+                                {tag === 'motor' ?
+                                    <DriveEtaRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    <DriveEtaRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Mobile" arrow>
+                            <IconButton aria-label="mobile" onClick={() => { setTagState( 'mobile'); getAds({tag: 'mobile', ...state})}}>
+                                {tag === 'mobile' ?
+                                    <PhoneIphoneRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    <PhoneIphoneRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="PC" arrow>
+                            <IconButton aria-label="pc" onClick={() => { setTagState( 'pc'); getAds({tag: 'pc', ...state})}}>
+                                {tag === 'pc' ?
+                                    <ComputerRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    <ComputerRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Deportes" arrow>
+                            <IconButton aria-label="deportes" onClick={() => { setTagState( 'sports'); getAds({tag: 'sports', ...state})}}>
+                                {tag === 'sports' ?
+                                    <SportsBasketballRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    <SportsBasketballRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Electrodomésticos" arrow>
+                            <IconButton aria-label="Electrodomésticos" onClick={() => { setTagState( 'electro'); getAds({tag: 'electro', ...state})}}>
+                                {tag === 'electro' ?
+                                    <LocalLaundryServiceRounded fontSize="large" style={{color: '#03a9f4'}}/> :
+                                    <LocalLaundryServiceRounded fontSize="large"/>
+                                }
+                            </IconButton>
+                        </Tooltip>
                     </div>
                     <div className="selectores">
                         <form onSubmit={handleSubmit(state => { setState(state); getAds({tag, ...state})})} className="formSearch">
@@ -154,7 +169,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                                 />
                                 <Controller
                                     name="precios"
-                                    as={<ReactSelect className="controller" placeholder="Rango de precios"/>}
+                                    as={<ReactSelect className="controller" placeholder="Precios"/>}
                                     control={control}
                                     options={optionsPrice}
                                     defaultValue={optionsPrice[0]}

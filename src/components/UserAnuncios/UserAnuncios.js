@@ -157,11 +157,11 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                                 style={{backgroundColor:'#b3e5fc'}}
                                             />
                                             {ad.venta ?
-                                                <Chip className={classes.chipventa}
+                                                <Chip
                                                       label="venta"
                                                       style={{backgroundColor:'#0288d1', color: 'white'}}
                                                 /> :
-                                                <Chip className={classes.chipcompra}
+                                                <Chip
                                                       label="compra"
                                                       color="primary"
                                                       variant="outlined"
@@ -169,20 +169,21 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                         </CardActions>
                                     </div>
                                 </ButtonBase>
-                                {ad.autor.username === session.session.username &&(
-                                    <div className="anunciops">
-                                        <Tooltip title="Delete">
-                                            <IconButton aria-label="delete" className={classes.margin}
-                                                        onClick={()=> { handleClickOpenDelete(); setDialog(ad)}}>
-                                                <DeleteForeverRounded  />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title="editar">
-                                            <IconButton aria-label="edit" className={classes.margin}
-                                                        onClick={() => {handleClickOpenEdit(); setDialog(ad)}}>
-                                                <Edit  />
-                                            </IconButton>
-                                        </Tooltip>
+                                { session.success ?
+                                    ad.autor.username === session.session.username && (
+                                        <div className="anunciops">
+                                            <Tooltip title="Delete">
+                                                <IconButton aria-label="delete" className={classes.margin}
+                                                            onClick={()=> { handleClickOpenDelete(); setDialog(ad)}}>
+                                                    <DeleteForeverRounded  />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="editar">
+                                                <IconButton aria-label="edit" className={classes.margin}
+                                                            onClick={() => {handleClickOpenEdit(); setDialog(ad)}}>
+                                                    <Edit  />
+                                                </IconButton>
+                                            </Tooltip>
                                             {ad.vendido && (
                                                 <Tooltip title="Vendido">
                                                     <IconButton aria-label="vendido" className={classes.margin}
@@ -219,114 +220,115 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                                     </IconButton>
                                                 </Tooltip>
                                             )}
-                                        <Dialog
-                                        open={open}
-                                        onClose={handleClose}
-                                        id={ad._id}
-                                        aria-labelledby="alert-dialog-title"
-                                        aria-describedby="alert-dialog-description">
-                                        <DialogTitle id="alert-dialog-title">{"Atención"}</DialogTitle>
-                                        <DialogContent>
-                                            <DialogContentText id="alert-dialog-description">
-                                                Si acepta, se procedera a eliminar el anuncio y toda la información
-                                                relativa a este.
-                                                ¿Está seguro que desea eliminar el anuncio?
-                                            </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button onClick={handleClose} className={classes.buttonBlue2}>
-                                                Cancelar
-                                            </Button>
-                                            <Button onClick={(e) => delAd(e, dialogState._id)}
-                                                    type="submit" className={classes.buttonRed}>
-                                                Aceptar
-                                            </Button>
-                                        </DialogActions>
-                                        </Dialog>
-                                        <Dialog
-                                            open={openEdit}
-                                            onClose={handleClose}
-                                            id={ad._id}
-                                            aria-labelledby="alert-dialog-title"
-                                            aria-describedby="alert-dialog-description">
-                                            <DialogTitle id="alert-dialog-title">
-                                                {"Modifique los datos del anuncio que desee"}
-                                            </DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText id="alert-dialog-description">
-
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <form onSubmit={handleSubmit(onSubmit)}>
-                                                    <div className="inputForm">
-                                                        {dialogState && (
-                                                            <div>
-                                                                Nombre del anuncio:
-                                                                <Controller
-                                                                    name="nombre"
-                                                                    as={<TextField variant="outlined"  className="controller" placeholder="nombre"/>}
-                                                                    rules={{required: true}}
-                                                                    control={control}
-                                                                    defaultValue={dialogState.nombre}
-                                                                />
-                                                                {errors.nombre && "Your input is required"}
-                                                                Descripción:
-                                                                <Controller
-                                                                    name="descripcion"
-                                                                    as={<TextField variant="outlined" className="controller" multiline
-                                                                                   rows="4" placeholder="descripción"/>}
-                                                                    rules={{required: true}}
-                                                                    control={control}
-                                                                    defaultValue={dialogState.descripcion}
-                                                                />
-                                                                {errors.descripcion && "Your input is required"}
-                                                                Precio:
-                                                                <Controller
-                                                                    name="precio"
-                                                                    as={<TextField variant="outlined" type="number" className="controller" placeholder="precio"/>}
-                                                                    rules={{required: true}}
-                                                                    control={control}
-                                                                    defaultValue={dialogState.precio}
-                                                                />
-                                                                {errors.precio && "Your input is required"}
-                                                                Tags:
-                                                                <Controller
-                                                                    name="tags"
-                                                                    as={<ReactSelect className="controller" placeholder="Tags"
-                                                                                     options={options} isMulti/>}
-                                                                    rules={{required: true}}
-                                                                    control={control}
-                                                                    defaultValue={valueTag(dialogState.tags)}
-                                                                />
-                                                                {errors.tags && "Your input is required"}
-                                                                Tipo:
-                                                                <Controller
-                                                                    name="venta"
-                                                                    as={<ReactSelect className="controller" placeholder="tipo"
-                                                                                     options={optionsVenta}/>}
-                                                                    onChange={([selected]) => {
-                                                                        return { value: selected };
-                                                                    }}
-                                                                    rules={{required: true}}
-                                                                    control={control}
-                                                                    defaultValue={getTipoValue(dialogState.value)}
-                                                                />
-                                                                {errors.venta && "Your input is required"}
-                                                            </div>
-                                                        )}
-                                                    </div>
+                                            <Dialog
+                                                open={open}
+                                                onClose={handleClose}
+                                                id={ad._id}
+                                                aria-labelledby="alert-dialog-title"
+                                                aria-describedby="alert-dialog-description">
+                                                <DialogTitle id="alert-dialog-title">{"Atención"}</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-description">
+                                                        Si acepta, se procedera a eliminar el anuncio y toda la información
+                                                        relativa a este.
+                                                        ¿Está seguro que desea eliminar el anuncio?
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
                                                     <Button onClick={handleClose} className={classes.buttonBlue2}>
                                                         Cancelar
                                                     </Button>
-                                                    <Button onClick={handleClose} type="submit" className={classes.buttonRed}>
+                                                    <Button onClick={(e) => delAd(e, dialogState._id)}
+                                                            type="submit" className={classes.buttonRed}>
                                                         Aceptar
                                                     </Button>
-                                                </form>
-                                            </DialogActions>
-                                        </Dialog>
-                                    </div>
-                                )}
+                                                </DialogActions>
+                                            </Dialog>
+                                            <Dialog
+                                                open={openEdit}
+                                                onClose={handleClose}
+                                                id={ad._id}
+                                                aria-labelledby="alert-dialog-title"
+                                                aria-describedby="alert-dialog-description">
+                                                <DialogTitle id="alert-dialog-title">
+                                                    {"Modifique los datos del anuncio que desee"}
+                                                </DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText id="alert-dialog-description">
+
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                                        <div className="inputForm">
+                                                            {dialogState && (
+                                                                <div>
+                                                                    Nombre del anuncio:
+                                                                    <Controller
+                                                                        name="nombre"
+                                                                        as={<TextField variant="outlined"  className="controller" placeholder="nombre"/>}
+                                                                        rules={{required: true}}
+                                                                        control={control}
+                                                                        defaultValue={dialogState.nombre}
+                                                                    />
+                                                                    {errors.nombre && "Your input is required"}
+                                                                    Descripción:
+                                                                    <Controller
+                                                                        name="descripcion"
+                                                                        as={<TextField variant="outlined" className="controller" multiline
+                                                                                       rows="4" placeholder="descripción"/>}
+                                                                        rules={{required: true}}
+                                                                        control={control}
+                                                                        defaultValue={dialogState.descripcion}
+                                                                    />
+                                                                    {errors.descripcion && "Your input is required"}
+                                                                    Precio:
+                                                                    <Controller
+                                                                        name="precio"
+                                                                        as={<TextField variant="outlined" type="number" className="controller" placeholder="precio"/>}
+                                                                        rules={{required: true}}
+                                                                        control={control}
+                                                                        defaultValue={dialogState.precio}
+                                                                    />
+                                                                    {errors.precio && "Your input is required"}
+                                                                    Tags:
+                                                                    <Controller
+                                                                        name="tags"
+                                                                        as={<ReactSelect className="controller" placeholder="Tags"
+                                                                                         options={options} isMulti/>}
+                                                                        rules={{required: true}}
+                                                                        control={control}
+                                                                        defaultValue={valueTag(dialogState.tags)}
+                                                                    />
+                                                                    {errors.tags && "Your input is required"}
+                                                                    Tipo:
+                                                                    <Controller
+                                                                        name="venta"
+                                                                        as={<ReactSelect className="controller" placeholder="tipo"
+                                                                                         options={optionsVenta}/>}
+                                                                        onChange={([selected]) => {
+                                                                            return { value: selected };
+                                                                        }}
+                                                                        rules={{required: true}}
+                                                                        control={control}
+                                                                        defaultValue={getTipoValue(dialogState.value)}
+                                                                    />
+                                                                    {errors.venta && "Your input is required"}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <Button onClick={handleClose} className={classes.buttonBlue2}>
+                                                            Cancelar
+                                                        </Button>
+                                                        <Button onClick={handleClose} type="submit" className={classes.buttonRed}>
+                                                            Aceptar
+                                                        </Button>
+                                                    </form>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </div>
+                                    ) : <div></div>
+                                }
                             </Card>
                         ))
                 }

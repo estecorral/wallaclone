@@ -70,7 +70,7 @@ export default function Detail({match, getAd, ad, session, setFavorite, getFavs,
                               {ad.descripcion}
                           </Typography>
                       </CardContent>
-                      <CardActions disableSpacing>
+                      <CardActions className="cardActions" disableSpacing>
                           { session.success && session.session.username !== ad.autor.username && ( getFavs.length > 0 && getFavs.find
                           (fav => fav._id === ad._id) ?
                               <IconButton aria-label="add to favorites" onClick={(e) => delFav(e)}>
@@ -80,31 +80,31 @@ export default function Detail({match, getAd, ad, session, setFavorite, getFavs,
                                   <FavoriteOutlined />
                               </IconButton>
                           )}
-                          <Chip
+                          <Chip className="chip"
                               icon={<EuroSymbolRounded />}
                               label={ad.precio}
                               style={{backgroundColor:'#b3e5fc'}}
                           />
                           {ad.venta ?
-                              <Chip
+                              <Chip className="chip"
                                     label="venta"
                                     style={{backgroundColor:'#0288d1', color: 'white'}}
                               /> :
-                              <Chip
+                              <Chip className="chip"
                                     label="compra"
                                     color="primary"
                                     variant="outlined"
                               />}
-                              Categorias:
                           {ad.tags.map((tag, key) =>(
-                              <Chip key={key}
+                              <Chip className="chip"
+                                  key={key}
                                   label={tag}
                                   style={{backgroundColor:'#b3e5fc'}}
                               />
                           ))}
-                          Propietario:
                           <Button component={Link} to={`/anuncios/${ad.autor.username}`}>
-                              <Chip label={ad.autor.username}
+                              <Chip className="chip"
+                                    label={ad.autor.username}
                                     style={{backgroundColor:'#84ffff'}}
                               />
                           </Button>

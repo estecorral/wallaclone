@@ -111,7 +111,7 @@ const navStyles = makeStyles((theme: Theme) =>
         },
         card: {
             display: 'flex',
-            width: '60%',
+            width: '80%',
             margin: '5px',
         },
         cardProfile: {
@@ -141,7 +141,7 @@ const navStyles = makeStyles((theme: Theme) =>
         },
         cardDetail: {
             margin: '20px',
-            width: '60%',
+            width: '80%',
         },
     }),
 );
