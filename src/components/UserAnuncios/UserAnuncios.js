@@ -139,7 +139,7 @@ export default function UserAnuncios({match, getAds, ads, session, deleteAd, upd
                                             to={`/detail/${ad.nombre}/${ad._id}`}>
                                 <CardMedia
                                     className={classes.cover}
-                                    image={`http://localhost:3001/images/anuncios/${ad.foto}`}
+                                    image={`http://18.219.27.78/images/anuncios/${ad.foto}`}
                                 />
                                     <div className={classes.details}>
                                         <CardContent className={classes.content}>

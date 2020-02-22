@@ -46,7 +46,7 @@ export default function FavoritosList({favorites, getAllFavorites, session}) {
                         <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${fav.nombre}/${fav._id}`}>
                             <CardMedia
                                 className={classes.cover}
-                                image={`http://localhost:3001/images/anuncios/${fav.foto}`}
+                                image={`http://18.219.27.78/images/anuncios/${fav.foto}`}
                             />
                             <div className={classes.details}>
                                 <CardContent className={classes.content}>

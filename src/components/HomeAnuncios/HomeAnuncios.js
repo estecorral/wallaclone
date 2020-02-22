@@ -202,7 +202,7 @@ export default function HomeAnuncios({getFilterAds, getAllAds, ads, revertAds}) 
                                     <ButtonBase className={classes.buttonCard} component={Link} to={`/detail/${(ad.nombre.toLocaleLowerCase()).trim()}/${ad._id}`}>
                                     <CardMedia
                                         className={classes.cover}
-                                        image={`http://localhost:3001/images/anuncios/${ad.foto}`}
+                                        image={`http://18.219.27.78/images/anuncios/${ad.foto}`}
                                     />
                                         <div className={classes.details}>
                                             <CardContent className={classes.content}>

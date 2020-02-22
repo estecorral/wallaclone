@@ -64,7 +64,7 @@ export default function Detail({match, getAd, ad, session, setFavorite, getFavs,
                                     style={{backgroundColor:'#f44336', color: 'white'}}
                               />
                           )}
-                          <img className="media" src={`http://localhost:3001/images/anuncios/${ad.foto}`} alt=""/>
+                          <img className="media" src={`http://18.219.27.78/images/anuncios/${ad.foto}`} alt=""/>
                       <CardContent>
                           <Typography className="cardDescription" variant="body2" color="textSecondary" component="p">
                               {ad.descripcion}
