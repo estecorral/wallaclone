@@ -16,7 +16,6 @@ export default function ResetPassword({reset}) {
     const { handleSubmit, errors, control } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
         reset(data);
     };
 

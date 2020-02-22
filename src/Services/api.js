@@ -65,7 +65,6 @@ const setNewPass = async (pass, email, token) => {
         return await axios.put(`${API_URL}/reset/${token}`, {password: pass, email: email}, {
             headers: { authorization: token },
         }).then(res => {
-            console.log(res.data);
             return res.data.result;
         });
     }catch (e) {

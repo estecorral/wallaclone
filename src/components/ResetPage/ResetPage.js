@@ -15,7 +15,6 @@ export default function ResetPage({match, resetPass}) {
     const { handleSubmit, errors, getValues, control } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
         if (data.password === data.checkPassword) {
             resetPass(data.password, match.params.email, match.params.token);
         }

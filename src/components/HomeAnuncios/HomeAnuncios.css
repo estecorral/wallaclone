@@ -9,7 +9,7 @@
     align-items: center;
     background-color: white;
     width: 100%;
-    height: 25vh;
+    height: 25%;
 }
 .selectores {
     width: 100%;
@@ -26,13 +26,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
 }
 .filtrosSelect {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
+    margin: 10px;
+    width: 100%;
 }
 .controller {
     width: 32%;
