@@ -7,7 +7,10 @@ const defaultState = {
     ad: {},
     tags: [],
     favs: [],
-    session: { success: false },
+    session: {
+        success: false,
+        session: { }
+    },
     response: {},
     ui: {
         loading: false,

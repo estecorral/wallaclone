@@ -10,9 +10,9 @@ import './index.css';
 
 const history = createBrowserHistory();
 
-const store = configureStore();
-
 const session = {session: restoreUser() ||  undefined } ;
+
+const store = configureStore({history,})(session);
 
 const rootProps = {
     history,
